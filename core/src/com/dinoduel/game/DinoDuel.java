@@ -10,7 +10,7 @@ import com.dinoduel.game.Screens.PlayScreen;
 
 public class DinoDuel extends Game {
     public SpriteBatch batch;
-//hey all
+
     @Override
     public void create() {
         batch = new SpriteBatch();
