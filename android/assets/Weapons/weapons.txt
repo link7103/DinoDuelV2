@@ -1,4 +1,4 @@
-guns.png
+weapons.png
 size: 307, 255
 format: RGBA8888
 filter: Nearest,Nearest

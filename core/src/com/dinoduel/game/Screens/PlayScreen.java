@@ -28,6 +28,7 @@ import com.dinoduel.game.DinoDuel;
 import com.dinoduel.game.Scenes.Hud;
 import com.dinoduel.game.Sprites.Dino;
 import com.dinoduel.game.Tools.B2WorldCreator;
+import com.dinoduel.game.Weapons.Weapon;
 
 import java.security.Policy;
 
@@ -50,12 +51,12 @@ public class PlayScreen implements Screen {
     private Dino player1;
     //Player Sprites
     private TextureAtlas dinoAtlas;
-
     //Weapon Sprites
     public TextureAtlas weaponAtlas;
 
     public PlayScreen(DinoDuel game) {
         dinoAtlas = new TextureAtlas("Dinos/DinoSprites.txt");
+        weaponAtlas = new TextureAtlas("weapons/weapons.txt");
 
         // FIXME: 2020-02-01 weaponAtlas = new TextureAtlas();
         this.game = game;
@@ -81,6 +82,10 @@ public class PlayScreen implements Screen {
     public TextureAtlas getDinoAtlas() {
         return dinoAtlas;
     }//end getDinoAtlas
+
+    public TextureAtlas getweaponAtlas() {
+        return weaponAtlas;
+    }//end getWeaponAtlas
 
     @Override
     public void show() {
