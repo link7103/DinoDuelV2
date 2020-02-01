@@ -51,8 +51,13 @@ public class PlayScreen implements Screen {
     //Player Sprites
     private TextureAtlas dinoAtlas;
 
+    //Weapon Sprites
+    public TextureAtlas weaponAtlas;
+
     public PlayScreen(DinoDuel game) {
         dinoAtlas = new TextureAtlas("Dinos/DinoSprites.txt");
+
+        // FIXME: 2020-02-01 weaponAtlas = new TextureAtlas();
         this.game = game;
         //Camera that follows the players
         gameCam = new OrthographicCamera();
