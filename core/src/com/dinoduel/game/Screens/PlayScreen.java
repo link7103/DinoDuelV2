@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -31,11 +32,12 @@ import com.dinoduel.game.Tools.B2WorldCreator;
 import java.security.Policy;
 
 public class PlayScreen implements Screen {
-
+    //Main Game
     private DinoDuel game;
     private OrthographicCamera gameCam;
     private Viewport gamePort;
     private Hud hud;
+   //Map
     private TmxMapLoader maploader;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
@@ -46,8 +48,11 @@ public class PlayScreen implements Screen {
 
     //Player
     private Dino player1;
+    //Player Sprites
+    private TextureAtlas dinoAtlas;
 
     public PlayScreen(DinoDuel game) {
+        dinoAtlas = new TextureAtlas("Dinos/DinoSprites.txt");
         this.game = game;
         //Camera that follows the players
         gameCam = new OrthographicCamera();
@@ -68,21 +73,28 @@ public class PlayScreen implements Screen {
         new B2WorldCreator(world, map);
 
         //Player1
-        player1 = new Dino(world);
+        player1 = new Dino(world, this);
 
 
-    }
+    }//end constructor
+
+    public TextureAtlas getDinoAtlas(){
+        return dinoAtlas;
+    }//end getDinoAtlas
 
     @Override
     public void show() {
-
-    }
+    }//end show
 
     //dt = delta time
-    public void update(float dt) {
+    public void update(float dt) { //Updates the screen every frame
         //handle user input first
         handleInput(dt);
+        //takes 1 step in the physics simulation ( 60 times per second)
         world.step(1 / 60f, 6, 2);
+        //updates player sprite position
+        player1.update(dt);
+        //attach the gamecam to the p1s x coordinate
         gameCam.position.x = player1.b2body.getPosition().x;
         //update gamecam with correct coordinates after changes
         gameCam.update();
@@ -106,16 +118,25 @@ public class PlayScreen implements Screen {
 
     @Override
     public void render(float deltaTime) {
+        //seperates update logic from render
         update(deltaTime);
 
         //clears the game screen with black
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        //renders the game map
         renderer.render();
 
         //renderer our Box2DDebugLines
         b2dr.render(world, gameCam.combined);
+
+        //renders the Dino1
+        game.batch.setProjectionMatrix(gameCam.combined);
+        game.batch.begin();
+        player1.draw(game.batch);
+        game.batch.end();
+
         //sets the batch to draw what the camera sees
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
@@ -124,22 +145,22 @@ public class PlayScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         gamePort.update(width, height);
-    }
+    }//end resize
 
     @Override
     public void pause() {
 
-    }
+    }//end pause
 
     @Override
     public void resume() {
 
-    }
+    }//end resume
 
     @Override
     public void hide() {
 
-    }
+    }//end hide
 
     @Override
     public void dispose() {
@@ -149,5 +170,5 @@ public class PlayScreen implements Screen {
         b2dr.dispose();
         hud.dispose();
 
-    }
-}
+    }//end dispose
+}//end class
