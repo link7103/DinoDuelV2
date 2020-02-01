@@ -19,11 +19,10 @@ public class DinoDuel extends Game {
     public void create() {
         batch = new SpriteBatch();
         setScreen((new PlayScreen(this)));
-    }
+    }//end create
 
     @Override
     public void render() {
         super.render();
-    }
-
-}
+    }//end render
+}//end class

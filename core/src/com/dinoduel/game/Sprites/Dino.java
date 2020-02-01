@@ -22,13 +22,11 @@ public class Dino extends Sprite {
 
     public enum State {FALLING, JUMPING, STANDING, RUNNING, DUCKING, DUCKRUNNING}
 
-    ;
     public State currentState;
     public State previousState;
 
     public World world;
     public Body b2body;
-    //will need to pass in.
     private TextureRegion dinoIdle0;
     private Animation<TextureRegion> dinoIdle;
     private TextureRegion dinoDuck;
@@ -39,6 +37,7 @@ public class Dino extends Sprite {
     private boolean runningRight;
 
     public Dino(World world, PlayScreen screen) {
+        //Initialize Variables
         super(screen.getDinoAtlas().findRegion("DinoSprites - doux"));
         this.world = world;
         currentState = State.STANDING;
@@ -46,6 +45,7 @@ public class Dino extends Sprite {
         stateTimer = 0;
         runningRight = true;
 
+        //Sets up the various animations - will need to adjust the y value for subsequent players
         Array<TextureRegion> frames = new Array<TextureRegion>();
         for (int i = 0; i < 3; i++) {
             frames.add(new TextureRegion(getTexture(), i * 24, 0, 24, 24));
@@ -70,20 +70,29 @@ public class Dino extends Sprite {
         }
         dinoDuckRun = new Animation(0.1f, frames);
         frames.clear();
-
-        defineDino();
+        //Finishes setting up the dino and sets its sprite.
+        defineDino(0);
         dinoIdle0 = new TextureRegion(getTexture(), 0, 0, 24, 24);
         dinoDuck = new TextureRegion(getTexture(), 17 * 24, 0, 24, 24);
         setBounds(0, 0, 24 / DinoDuel.PPM, 24 / DinoDuel.PPM);
         setRegion(dinoIdle0);
     }//end constructor
 
-    public void update(float dt) {
-        setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y + (float) 0.025 - getHeight() / 2);
+    public void update(float dt) { //Updates the sprite every frame
+        if(PlayScreen.p1Ducking) {
+            if(runningRight){
+                setPosition(b2body.getPosition().x - (float)0.025 - getWidth() / 2, b2body.getPosition().y + (float) 0.01 - getHeight() / 2);
+            }else{
+                setPosition(b2body.getPosition().x + (float)0.025 - getWidth() / 2, b2body.getPosition().y + (float) 0.01 - getHeight() / 2);
+
+            }
+        }else {
+            setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
+        }
         setRegion(getFrame(dt));
     }//end update
 
-    public TextureRegion getFrame(float dt) {
+    public TextureRegion getFrame(float dt) { // Controls which animation or frame is played.
         currentState = getState();
 
         TextureRegion region;
@@ -121,6 +130,13 @@ public class Dino extends Sprite {
     }//end getFrame
 
     public State getState() {
+        //Calls for a change in collision box
+         if (PlayScreen.p1Ducking && previousState != State.DUCKING && previousState != State.DUCKRUNNING && b2body.getLinearVelocity().y == 0) {
+            defineDino(1);
+        } else if ((!PlayScreen.p1Ducking && (previousState == State.DUCKING || previousState == State.DUCKRUNNING))) {
+            defineDino(2);
+        }
+        //Sets different states
         if (b2body.getLinearVelocity().y > 0 || (b2body.getLinearVelocity().y < 0 && previousState == State.JUMPING))
             return State.JUMPING;
         else if (b2body.getLinearVelocity().y < 0)
@@ -136,23 +152,53 @@ public class Dino extends Sprite {
             return State.DUCKING;
         else
             return State.STANDING;
-        //add ducking here
     }//end getState
 
 
-    public void defineDino() {
+    public void defineDino(int instruction) {
+        //0 = Initialize, 2 = Ducking, 3 = Not Ducking
         BodyDef bdef = new BodyDef();
-        //starting postion. (Pass in?)
-        bdef.position.set(32 / DinoDuel.PPM, 32 / DinoDuel.PPM);
-        bdef.type = BodyDef.BodyType.DynamicBody;
-        b2body = world.createBody(bdef);
 
-        FixtureDef fdef = new FixtureDef();
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(3 / DinoDuel.PPM, 6 / DinoDuel.PPM);
+        if (instruction == 0) {
+            //starting position. (Pass in for multiple players?)
+            bdef.position.set(32 / DinoDuel.PPM, 32 / DinoDuel.PPM);
+            bdef.type = BodyDef.BodyType.DynamicBody;
+            b2body = world.createBody(bdef);
 
-        fdef.shape = shape;
-        b2body.createFixture(fdef);
+            FixtureDef fdef = new FixtureDef();
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox(3 / DinoDuel.PPM, 8 / DinoDuel.PPM);
+
+            fdef.shape = shape;
+            b2body.createFixture(fdef);
+        } else {
+            Vector2 currentPosition = b2body.getPosition();
+            world.destroyBody(b2body);
+            bdef.position.set(currentPosition);
+            if (instruction == 1) {//Duck
+                bdef.type = BodyDef.BodyType.DynamicBody;
+                b2body = world.createBody(bdef);
+
+                FixtureDef fdef = new FixtureDef();
+                PolygonShape shape = new PolygonShape();
+                shape.setAsBox(8 / DinoDuel.PPM, (float)6.65 / DinoDuel.PPM);
+
+                fdef.shape = shape;
+                b2body.createFixture(fdef);
+            } else {//Unduck
+                bdef.type = BodyDef.BodyType.DynamicBody;
+                b2body = world.createBody(bdef);
+
+                FixtureDef fdef = new FixtureDef();
+                PolygonShape shape = new PolygonShape();
+                shape.setAsBox(3 / DinoDuel.PPM, 8 / DinoDuel.PPM);
+
+                fdef.shape = shape;
+                b2body.createFixture(fdef);
+            }
+        }
+
 
     }//end defineDino
+
 }//end Dino

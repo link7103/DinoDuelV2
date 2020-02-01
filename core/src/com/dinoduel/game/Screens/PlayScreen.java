@@ -66,17 +66,12 @@ public class PlayScreen implements Screen {
         map = maploader.load("DinoDuel Basic Tilesets/testLevel.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1 / DinoDuel.PPM);
         gameCam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
-
+        //Creates the world
         world = new World(new Vector2(0, -10), true);
         b2dr = new Box2DDebugRenderer();
-
-
         new B2WorldCreator(world, map);
-
         //Player1
         player1 = new Dino(world, this);
-
-
     }//end constructor
 
     public TextureAtlas getDinoAtlas(){
@@ -101,8 +96,6 @@ public class PlayScreen implements Screen {
         gameCam.update();
         //tell it to only render what the camera can see
         renderer.setView(gameCam);
-
-
     }//end update
 
     private void handleInput(float dt) {
@@ -175,6 +168,5 @@ public class PlayScreen implements Screen {
         world.dispose();
         b2dr.dispose();
         hud.dispose();
-
     }//end dispose
 }//end class

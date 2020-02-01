@@ -56,12 +56,11 @@ public class Hud implements Disposable {
         table.add(countDownLabel).expandX();
         table.add(stageNameLabel).expandX().padTop(10);
 
-
         stage.addActor(table);
     }
 
     @Override
     public void dispose() {
         stage.dispose();
-    }
+    }//end dispose
 }//end class
