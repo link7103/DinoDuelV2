@@ -35,6 +35,7 @@ public class Dino extends Sprite {
     private Animation<TextureRegion> dinoDuckRun;
     private float stateTimer;
     private boolean runningRight;
+    public boolean playerDucking = true;
 
     public Dino(World world, PlayScreen screen) {
         //Initialize Variables
@@ -79,7 +80,7 @@ public class Dino extends Sprite {
     }//end constructor
 
     public void update(float dt) { //Updates the sprite every frame
-        if(PlayScreen.p1Ducking) {
+        if(playerDucking) {
             if(runningRight){
                 setPosition(b2body.getPosition().x - (float)0.025 - getWidth() / 2, b2body.getPosition().y + (float) 0.01 - getHeight() / 2);
             }else{
@@ -142,9 +143,9 @@ public class Dino extends Sprite {
             return State.JUMPING;
         }
         //Calls for a change in collision box
-        if ((PlayScreen.p1Ducking && previousState != State.DUCKING && previousState != State.DUCKRUNNING && b2body.getLinearVelocity().y == 0) ) {
+        if ((playerDucking && previousState != State.DUCKING && previousState != State.DUCKRUNNING && b2body.getLinearVelocity().y == 0) ) {
             defineDino(1);
-        } else if ((!PlayScreen.p1Ducking && (previousState == State.DUCKING || previousState == State.DUCKRUNNING))) {
+        } else if ((!playerDucking && (previousState == State.DUCKING || previousState == State.DUCKRUNNING))) {
             defineDino(2);
         }
         //Sets different states
@@ -156,12 +157,12 @@ public class Dino extends Sprite {
             return State.FALLING;
         else if (b2body.getLinearVelocity().x != 0)
             //will need to adapt for multiple players
-            if (PlayScreen.p1Ducking) {
+            if (playerDucking) {
                 return State.DUCKRUNNING;
             } else {
                 return State.RUNNING;
             }
-        else if (PlayScreen.p1Ducking)
+        else if (playerDucking)
             return State.DUCKING;
         else
             return State.STANDING;

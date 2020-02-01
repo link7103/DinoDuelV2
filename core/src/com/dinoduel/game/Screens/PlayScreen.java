@@ -37,7 +37,7 @@ public class PlayScreen implements Screen {
     private OrthographicCamera gameCam;
     private Viewport gamePort;
     private Hud hud;
-   //Map
+    //Map
     private TmxMapLoader maploader;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
@@ -48,7 +48,6 @@ public class PlayScreen implements Screen {
 
     //Player
     private Dino player1;
-    public static boolean p1Ducking = true;
     //Player Sprites
     private TextureAtlas dinoAtlas;
 
@@ -74,7 +73,7 @@ public class PlayScreen implements Screen {
         player1 = new Dino(world, this);
     }//end constructor
 
-    public TextureAtlas getDinoAtlas(){
+    public TextureAtlas getDinoAtlas() {
         return dinoAtlas;
     }//end getDinoAtlas
 
@@ -109,9 +108,9 @@ public class PlayScreen implements Screen {
             player1.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player1.b2body.getWorldCenter(), true);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            p1Ducking = true;
-        }else{
-           p1Ducking = false;
+            player1.playerDucking = true;
+        } else {
+            player1.playerDucking = false;
         }
     }//end handleInput
 
