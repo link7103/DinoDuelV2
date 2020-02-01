@@ -15,16 +15,17 @@ import com.dinoduel.game.Screens.PlayScreen;
 
 public class Dino extends Sprite {
 
+    public enum State {FALLING, JUMPING, STANDING, RUNNING, DUCKING}
 
-    public enum State { FALLING, JUMPING, STANDING, RUNNING, DUCKING};
+    ;
     public State currentState;
     public State previousState;
+
     public World world;
     public Body b2body;
-   //will need to pass in.
+    //will need to pass in.
     private TextureRegion dinoIdle0;
     private TextureRegion dinoDuck;
-
     private Animation<TextureRegion> dinoRun;
     private Animation<TextureRegion> dinoJump;
     private Animation<TextureRegion> dinoDuckRun;
@@ -32,7 +33,7 @@ public class Dino extends Sprite {
     private boolean runningRight;
 
     public Dino(World world, PlayScreen screen) {
-        super (screen.getDinoAtlas().findRegion("DinoSprites - doux"));
+        super(screen.getDinoAtlas().findRegion("DinoSprites - doux"));
         this.world = world;
         currentState = State.STANDING;
         previousState = State.STANDING;
@@ -49,7 +50,7 @@ public class Dino extends Sprite {
         for (int i = 11; i < 13; i++) {
             frames.add(new TextureRegion(getTexture(), i * 24, 0, 24, 24));
         }
-        dinoJump  = new Animation(0.1f, frames);
+        dinoJump = new Animation(0.1f, frames);
         frames.clear();
 
         for (int i = 18; i < 23; i++) {
@@ -59,14 +60,14 @@ public class Dino extends Sprite {
         frames.clear();
 
         defineDino();
-        dinoIdle0 = new TextureRegion(getTexture(), 0, 0, 24,24);
+        dinoIdle0 = new TextureRegion(getTexture(), 0, 0, 24, 24);
         dinoDuck = new TextureRegion(getTexture(), 17 * 24, 0, 24, 24);
-        setBounds(0,0,24 / DinoDuel.PPM, 24 / DinoDuel.PPM);
+        setBounds(0, 0, 24 / DinoDuel.PPM, 24 / DinoDuel.PPM);
         setRegion(dinoIdle0);
     }//end constructor
 
-    public void update (float dt){
-        setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y + (float)0.025 - getHeight()/2);
+    public void update(float dt) {
+        setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y + (float) 0.025 - getHeight() / 2);
         setRegion(getFrame(dt));
     }//end update
 
@@ -78,12 +79,31 @@ public class Dino extends Sprite {
             case JUMPING:
                 region = dinoJump.getKeyFrame(stateTimer);
                 break;
+            case RUNNING:
+                region = dinoRun.getKeyFrame(stateTimer, true);
+                break;
+            case FALLING:
+            case STANDING:
+            default:
+                region = dinoIdle0;
+                break;
 
         }
-    }
+        if((b2body.getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()){
+            region.flip(true, false);
+            runningRight = false;
+        }else if((b2body.getLinearVelocity().x > 0 || runningRight) && region.isFlipX()){
+            region.flip(true, false);
+            runningRight = true;
+        }
+        //google to better understand
+        stateTimer = currentState == previousState ? stateTimer + dt : 0;
+        previousState = currentState;
+                return region;
+    }//end getFrame
 
     public State getState() {
-        if(b2body.getLinearVelocity().y>0 || (b2body.getLinearVelocity().y<0 && previousState == State.JUMPING))
+        if (b2body.getLinearVelocity().y > 0 || (b2body.getLinearVelocity().y < 0 && previousState == State.JUMPING))
             return State.JUMPING;
         else if (b2body.getLinearVelocity().y < 0)
             return State.FALLING;
@@ -92,7 +112,7 @@ public class Dino extends Sprite {
         else
             return State.STANDING;
         //add ducking here
-    }
+    }//end getState
 
 
     public void defineDino() {
