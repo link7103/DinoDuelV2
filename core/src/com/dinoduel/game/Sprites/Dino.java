@@ -80,7 +80,7 @@ public class Dino extends Sprite {
     }//end constructor
 
     public void update(float dt) { //Updates the sprite every frame
-        if(playerDucking) {
+        if(playerDucking && currentState != State.FALLING && currentState != State.JUMPING) {
             if(runningRight){
                 setPosition(b2body.getPosition().x - (float)0.025 - getWidth() / 2, b2body.getPosition().y + (float) 0.01 - getHeight() / 2);
             }else{
@@ -138,9 +138,10 @@ public class Dino extends Sprite {
 
         if (b2body.getLinearVelocity().y > 0 && previousState == State.DUCKING){
             defineDino(2);
-            this.b2body.applyLinearImpulse(new Vector2(0, 3f), this.b2body.getWorldCenter(), true);
-
             return State.JUMPING;
+        } else if (b2body.getLinearVelocity().y < 0 && !playerDucking && previousState == State.DUCKFALLING ){
+            defineDino(2);
+            return State.FALLING;
         }
         //Calls for a change in collision box
         if ((playerDucking && previousState != State.DUCKING && previousState != State.DUCKRUNNING && b2body.getLinearVelocity().y == 0) ) {
@@ -187,6 +188,7 @@ public class Dino extends Sprite {
             b2body.createFixture(fdef);
         } else {
             Vector2 currentPosition = b2body.getPosition();
+            Vector2 currentVelocity = b2body.getLinearVelocity();
             world.destroyBody(b2body);
             bdef.position.set(currentPosition);
             if (instruction == 1) {//Duck
@@ -199,6 +201,7 @@ public class Dino extends Sprite {
 
                 fdef.shape = shape;
                 b2body.createFixture(fdef);
+                b2body.setLinearVelocity(currentVelocity);
             } else {//Unduck
                 bdef.type = BodyDef.BodyType.DynamicBody;
                 b2body = world.createBody(bdef);
@@ -209,6 +212,8 @@ public class Dino extends Sprite {
 
                 fdef.shape = shape;
                 b2body.createFixture(fdef);
+                b2body.setLinearVelocity(currentVelocity);
+
             }
         }
 
