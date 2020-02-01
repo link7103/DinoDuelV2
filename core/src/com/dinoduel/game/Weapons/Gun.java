@@ -14,20 +14,20 @@ import com.dinoduel.game.Screens.PlayScreen;
 import java.util.ArrayList;
 
 public abstract class Gun extends Sprite implements Weapon  {
-    public Body wBody;
     public World world;
-    private TextureRegion img;
-    private int ammo;
-    private int magCap;
+    public Body wBody;
+    protected TextureRegion img;
+    protected int ammo;
+    protected int magCap;
     ArrayList<Bullet> mag = new ArrayList<Bullet>();
-    private int speed;
-    private int duration;
-    private int damage;
-    public int x;
+    protected int speed;
+    protected int duration;
+    protected int damage;
+    protected int x;
     public int y;
-    private int xSize;
-    private int ySize;
-    private boolean right;
+    protected int xSize;
+    protected int ySize;
+    protected boolean right;
 
     public Gun (int x, int y, World world, PlayScreen screen) {
         super(screen.getweaponAtlas().findRegion("guns"));
@@ -36,27 +36,11 @@ public abstract class Gun extends Sprite implements Weapon  {
         this.world = world;
         right = true;
 
-        defineWeapon(0);
+
     }
 
 
-    public void defineWeapon(int instruction) {
-        BodyDef bdef = new BodyDef();
 
-        if (instruction == 0) {
-
-            bdef.position.set(x / DinoDuel.PPM, y / DinoDuel.PPM);
-            bdef.type = BodyDef.BodyType.DynamicBody;
-            wBody = world.createBody(bdef);
-
-            FixtureDef fdef = new FixtureDef();
-            PolygonShape shape = new PolygonShape();
-            shape.setAsBox(xSize / DinoDuel.PPM, ySize / DinoDuel.PPM);
-
-            fdef.shape = shape;
-            wBody.createFixture(fdef);
-        }
-    }
 
     public void update() {
 
@@ -64,17 +48,20 @@ public abstract class Gun extends Sprite implements Weapon  {
         if (user != null) {
             wBody.setLinearVelocity(user.b2body.getLinearVelocity());
             setPosition(user.b2body.getPosition().x, user.b2body.getPosition().y);
+            setRegion(getFrame());
+        } else {
+            setPosition(wBody.getPosition().x, wBody.getPosition().y);
         }
 
-        setRegion(getFrame());
+
     }
 
     public TextureRegion getFrame() {
         TextureRegion region = img;
-        if ((wBody.getLinearVelocity().x < 0 || !right) && !region.isFlipX()) {
+        if ((user.b2body.getLinearVelocity().x < 0 || !right) && !region.isFlipX()) {
             region.flip(true, false);
             right = false;
-        } else if ((wBody.getLinearVelocity().x > 0 || right) && region.isFlipX()) {
+        } else if ((user.b2body.getLinearVelocity().x > 0 || right) && region.isFlipX()) {
             region.flip(true, false);
             right = true;
         }

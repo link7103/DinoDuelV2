@@ -13,7 +13,11 @@ import com.dinoduel.game.DinoDuel;
 import com.dinoduel.game.Sprites.GunBox;
 
 public class B2WorldCreator {
+
+    public static final short CATEGORY_SCENERY = 0x0004;
+    public static final short MASK_SCENERY = -1;
     public B2WorldCreator(World world, TiledMap map) {
+
         BodyDef bDef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fDef = new FixtureDef();
@@ -32,6 +36,8 @@ public class B2WorldCreator {
 
             shape.setAsBox(rect.getWidth() / 2 / DinoDuel.PPM, rect.getHeight() / 2 / DinoDuel.PPM);
             fDef.shape = shape;
+            fDef.filter.categoryBits = CATEGORY_SCENERY;
+            fDef.filter.maskBits = MASK_SCENERY;
             body.createFixture(fDef);
         }
 
@@ -47,6 +53,8 @@ public class B2WorldCreator {
 
             shape.setAsBox(rect.getWidth() / 2 / DinoDuel.PPM, rect.getHeight() / 2 / DinoDuel.PPM);
             fDef.shape = shape;
+            fDef.filter.categoryBits = CATEGORY_SCENERY;
+            fDef.filter.maskBits = MASK_SCENERY;
             body.createFixture(fDef);
         }
         //GunBox 6

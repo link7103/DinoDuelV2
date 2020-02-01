@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.dinoduel.game.DinoDuel;
 import com.dinoduel.game.Screens.PlayScreen;
+import com.dinoduel.game.Tools.B2WorldCreator;
 import com.dinoduel.game.Weapons.Weapon;
 
 
@@ -25,7 +26,8 @@ public class Dino extends Sprite {
 
     public State currentState;
     public State previousState;
-
+    public static final short CATEGORY_DINO = 0x0001;
+    public static final short MASK_DINO = CATEGORY_DINO | B2WorldCreator.CATEGORY_SCENERY;
     public World world;
     public Body b2body;
     private TextureRegion dinoIdle0;
@@ -190,6 +192,8 @@ public class Dino extends Sprite {
             shape.setAsBox(3 / DinoDuel.PPM, 8 / DinoDuel.PPM);
 
             fdef.shape = shape;
+            fdef.filter.categoryBits = CATEGORY_DINO;
+            fdef.filter.maskBits = MASK_DINO;
             b2body.createFixture(fdef);
         } else {
             Vector2 currentPosition = b2body.getPosition();
@@ -205,6 +209,8 @@ public class Dino extends Sprite {
                 shape.setAsBox(8 / DinoDuel.PPM, (float)6.65 / DinoDuel.PPM);
 
                 fdef.shape = shape;
+                fdef.filter.categoryBits = CATEGORY_DINO;
+                fdef.filter.maskBits = MASK_DINO;
                 b2body.createFixture(fdef);
                 b2body.setLinearVelocity(currentVelocity);
             } else {//Unduck
@@ -216,6 +222,8 @@ public class Dino extends Sprite {
                 shape.setAsBox(3 / DinoDuel.PPM, 8 / DinoDuel.PPM);
 
                 fdef.shape = shape;
+                fdef.filter.categoryBits = CATEGORY_DINO;
+                fdef.filter.maskBits = MASK_DINO;
                 b2body.createFixture(fdef);
                 b2body.setLinearVelocity(currentVelocity);
 

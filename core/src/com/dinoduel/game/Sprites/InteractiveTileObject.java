@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.dinoduel.game.DinoDuel;
+import com.dinoduel.game.Tools.B2WorldCreator;
 
 public abstract class InteractiveTileObject {
     protected World world;
@@ -33,6 +34,8 @@ public abstract class InteractiveTileObject {
 
         shape.setAsBox(bounds.getWidth() / 2 / DinoDuel.PPM, bounds.getHeight() / 2 / DinoDuel.PPM);
         fDef.shape = shape;
+        fDef.filter.categoryBits = B2WorldCreator.CATEGORY_SCENERY;
+        fDef.filter.maskBits = B2WorldCreator.MASK_SCENERY;
         body.createFixture(fDef);
     }
 }

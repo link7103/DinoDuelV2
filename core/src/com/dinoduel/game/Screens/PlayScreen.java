@@ -28,6 +28,8 @@ import com.dinoduel.game.DinoDuel;
 import com.dinoduel.game.Scenes.Hud;
 import com.dinoduel.game.Sprites.Dino;
 import com.dinoduel.game.Tools.B2WorldCreator;
+import com.dinoduel.game.Weapons.Gun;
+import com.dinoduel.game.Weapons.PPK;
 import com.dinoduel.game.Weapons.Weapon;
 
 import java.security.Policy;
@@ -54,11 +56,13 @@ public class PlayScreen implements Screen {
     //Weapon Sprites
     public TextureAtlas weaponAtlas;
 
+    private Gun pistol;
+
     public PlayScreen(DinoDuel game) {
         dinoAtlas = new TextureAtlas("Dinos/DinoSprites.txt");
         weaponAtlas = new TextureAtlas("weapons/weapons.txt");
 
-        // FIXME: 2020-02-01 weaponAtlas = new TextureAtlas();
+
         this.game = game;
         //Camera that follows the players
         gameCam = new OrthographicCamera();
@@ -77,6 +81,8 @@ public class PlayScreen implements Screen {
         new B2WorldCreator(world, map);
         //Player1
         player1 = new Dino(world, this);
+        //PPK test
+        pistol = new PPK(40, 32, world, this);
     }//end constructor
 
     public TextureAtlas getDinoAtlas() {
@@ -99,6 +105,7 @@ public class PlayScreen implements Screen {
         world.step(1 / 60f, 6, 2);
         //updates player sprite position
         player1.update(dt);
+        pistol.update();
 
         //attach the gamecam to the p1s x coordinate
         gameCam.position.x = player1.b2body.getPosition().x;
@@ -144,6 +151,9 @@ public class PlayScreen implements Screen {
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
         player1.draw(game.batch);
+
+        //might render pistol
+        pistol.draw(game.batch);
         game.batch.end();
 
         //sets the batch to draw what the camera sees
