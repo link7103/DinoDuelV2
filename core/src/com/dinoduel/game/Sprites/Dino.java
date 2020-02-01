@@ -20,7 +20,7 @@ import com.dinoduel.game.Screens.PlayScreen;
 
 public class Dino extends Sprite {
 
-    public enum State {FALLING, JUMPING, STANDING, RUNNING, DUCKING, DUCKRUNNING}
+    public enum State {FALLING, JUMPING, STANDING, RUNNING, DUCKING, DUCKRUNNING, DUCKFALLING}
 
     public State currentState;
     public State previousState;
@@ -109,8 +109,12 @@ public class Dino extends Sprite {
             case DUCKING:
                 region = dinoDuck;
                 break;
+            case DUCKFALLING:
+                region = dinoDuck;
+                break;
             case FALLING:
                 region = dinoIdle0;
+                break;
             case STANDING:
             default:
                 region = dinoIdle.getKeyFrame(stateTimer, true);
@@ -130,16 +134,25 @@ public class Dino extends Sprite {
     }//end getFrame
 
     public State getState() {
+
+        if (b2body.getLinearVelocity().y > 0 && previousState == State.DUCKING){
+            defineDino(2);
+            this.b2body.applyLinearImpulse(new Vector2(0, 3f), this.b2body.getWorldCenter(), true);
+
+            return State.JUMPING;
+        }
         //Calls for a change in collision box
-         if (PlayScreen.p1Ducking && previousState != State.DUCKING && previousState != State.DUCKRUNNING && b2body.getLinearVelocity().y == 0) {
+        if ((PlayScreen.p1Ducking && previousState != State.DUCKING && previousState != State.DUCKRUNNING && b2body.getLinearVelocity().y == 0) ) {
             defineDino(1);
         } else if ((!PlayScreen.p1Ducking && (previousState == State.DUCKING || previousState == State.DUCKRUNNING))) {
             defineDino(2);
         }
         //Sets different states
-        if (b2body.getLinearVelocity().y > 0 || (b2body.getLinearVelocity().y < 0 && previousState == State.JUMPING))
+        if (b2body.getLinearVelocity().y > 0 || (b2body.getLinearVelocity().y < 0 && previousState == State.JUMPING)) {
             return State.JUMPING;
-        else if (b2body.getLinearVelocity().y < 0)
+        }else if (b2body.getLinearVelocity().y<0 && (previousState == State.DUCKING || previousState == State.DUCKRUNNING || previousState == State.DUCKFALLING))
+            return State.DUCKFALLING;
+        else if (b2body.getLinearVelocity().y < 0  )
             return State.FALLING;
         else if (b2body.getLinearVelocity().x != 0)
             //will need to adapt for multiple players
@@ -156,7 +169,7 @@ public class Dino extends Sprite {
 
 
     public void defineDino(int instruction) {
-        //0 = Initialize, 2 = Ducking, 3 = Not Ducking
+        //0 = Initialize, 1 = Ducking, 3 = Not Ducking
         BodyDef bdef = new BodyDef();
 
         if (instruction == 0) {
