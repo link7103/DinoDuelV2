@@ -1,8 +1,11 @@
 package com.dinoduel.game.Sprites;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -17,7 +20,7 @@ import com.dinoduel.game.Screens.PlayScreen;
 
 public class Dino extends Sprite {
 
-    public enum State {FALLING, JUMPING, STANDING, RUNNING, DUCKING}
+    public enum State {FALLING, JUMPING, STANDING, RUNNING, DUCKING, DUCKRUNNING}
 
     ;
     public State currentState;
@@ -27,6 +30,7 @@ public class Dino extends Sprite {
     public Body b2body;
     //will need to pass in.
     private TextureRegion dinoIdle0;
+    private Animation<TextureRegion> dinoIdle;
     private TextureRegion dinoDuck;
     private Animation<TextureRegion> dinoRun;
     private Animation<TextureRegion> dinoJump;
@@ -43,6 +47,12 @@ public class Dino extends Sprite {
         runningRight = true;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
+        for (int i = 0; i < 3; i++) {
+            frames.add(new TextureRegion(getTexture(), i * 24, 0, 24, 24));
+        }
+        dinoIdle = new Animation(0.1f, frames);
+        frames.clear();
+
         for (int i = 4; i < 9; i++) {
             frames.add(new TextureRegion(getTexture(), i * 24, 0, 24, 24));
         }
@@ -84,24 +94,30 @@ public class Dino extends Sprite {
             case RUNNING:
                 region = dinoRun.getKeyFrame(stateTimer, true);
                 break;
+            case DUCKRUNNING:
+                region = dinoDuckRun.getKeyFrame(stateTimer, true);
+                break;
+            case DUCKING:
+                region = dinoDuck;
+                break;
             case FALLING:
+                region = dinoIdle0;
             case STANDING:
             default:
-                region = dinoIdle0;
+                region = dinoIdle.getKeyFrame(stateTimer, true);
                 break;
-
         }
-        if((b2body.getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()){
+        if ((b2body.getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()) {
             region.flip(true, false);
             runningRight = false;
-        }else if((b2body.getLinearVelocity().x > 0 || runningRight) && region.isFlipX()){
+        } else if ((b2body.getLinearVelocity().x > 0 || runningRight) && region.isFlipX()) {
             region.flip(true, false);
             runningRight = true;
         }
         //google to better understand
         stateTimer = currentState == previousState ? stateTimer + dt : 0;
         previousState = currentState;
-                return region;
+        return region;
     }//end getFrame
 
     public State getState() {
@@ -110,7 +126,14 @@ public class Dino extends Sprite {
         else if (b2body.getLinearVelocity().y < 0)
             return State.FALLING;
         else if (b2body.getLinearVelocity().x != 0)
-            return State.RUNNING;
+            //will need to adapt for multiple players
+            if (PlayScreen.p1Ducking) {
+                return State.DUCKRUNNING;
+            } else {
+                return State.RUNNING;
+            }
+        else if (PlayScreen.p1Ducking)
+            return State.DUCKING;
         else
             return State.STANDING;
         //add ducking here
@@ -126,7 +149,7 @@ public class Dino extends Sprite {
 
         FixtureDef fdef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(2/ DinoDuel.PPM,6 / DinoDuel.PPM);
+        shape.setAsBox(3 / DinoDuel.PPM, 6 / DinoDuel.PPM);
 
         fdef.shape = shape;
         b2body.createFixture(fdef);

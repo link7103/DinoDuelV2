@@ -48,6 +48,7 @@ public class PlayScreen implements Screen {
 
     //Player
     private Dino player1;
+    public static boolean p1Ducking = true;
     //Player Sprites
     private TextureAtlas dinoAtlas;
 
@@ -113,6 +114,11 @@ public class PlayScreen implements Screen {
         }
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player1.b2body.getLinearVelocity().x >= -2) {
             player1.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player1.b2body.getWorldCenter(), true);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            p1Ducking = true;
+        }else{
+           p1Ducking = false;
         }
     }//end handleInput
 
