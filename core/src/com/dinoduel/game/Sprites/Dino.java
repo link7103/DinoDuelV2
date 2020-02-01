@@ -8,10 +8,12 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.dinoduel.game.DinoDuel;
 import com.dinoduel.game.Screens.PlayScreen;
+
 
 public class Dino extends Sprite {
 
@@ -123,8 +125,8 @@ public class Dino extends Sprite {
         b2body = world.createBody(bdef);
 
         FixtureDef fdef = new FixtureDef();
-        CircleShape shape = new CircleShape();
-        shape.setRadius(6 / DinoDuel.PPM);
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(2/ DinoDuel.PPM,6 / DinoDuel.PPM);
 
         fdef.shape = shape;
         b2body.createFixture(fdef);
