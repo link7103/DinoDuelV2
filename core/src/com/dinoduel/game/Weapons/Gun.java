@@ -27,12 +27,16 @@ public abstract class Gun extends Sprite implements Weapon  {
     public int y;
     private int xSize;
     private int ySize;
+    private boolean right;
 
     public Gun (int x, int y, World world, PlayScreen screen) {
         super(screen.getweaponAtlas().findRegion("guns"));
         this.x = x;
         this.y = y;
         this.world = world;
+        right = true;
+
+        defineWeapon(0);
     }
 
 
@@ -52,5 +56,29 @@ public abstract class Gun extends Sprite implements Weapon  {
             fdef.shape = shape;
             wBody.createFixture(fdef);
         }
+    }
+
+    public void update() {
+
+        //based off dino update class, unsure if it works. Should move it with a user if it has one.
+        if (user != null) {
+            wBody.setLinearVelocity(user.b2body.getLinearVelocity());
+            setPosition(user.b2body.getPosition().x, user.b2body.getPosition().y);
+        }
+
+        setRegion(getFrame());
+    }
+
+    public TextureRegion getFrame() {
+        TextureRegion region = img;
+        if ((wBody.getLinearVelocity().x < 0 || !right) && !region.isFlipX()) {
+            region.flip(true, false);
+            right = false;
+        } else if ((wBody.getLinearVelocity().x > 0 || right) && region.isFlipX()) {
+            region.flip(true, false);
+            right = true;
+        }
+
+        return region;
     }
 }

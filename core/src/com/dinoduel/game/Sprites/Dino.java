@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.dinoduel.game.DinoDuel;
 import com.dinoduel.game.Screens.PlayScreen;
+import com.dinoduel.game.Weapons.Weapon;
 
 
 public class Dino extends Sprite {
@@ -36,6 +37,7 @@ public class Dino extends Sprite {
     private float stateTimer;
     private boolean runningRight;
     public boolean playerDucking = true;
+    private Weapon weapon;
 
     public Dino(World world, PlayScreen screen) {
         //Initialize Variables
@@ -91,6 +93,9 @@ public class Dino extends Sprite {
             setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         }
         setRegion(getFrame(dt));
+        if (weapon!= null) {
+            weapon.update();
+        }
     }//end update
 
     public TextureRegion getFrame(float dt) { // Controls which animation or frame is played.

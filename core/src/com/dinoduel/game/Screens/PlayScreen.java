@@ -99,6 +99,7 @@ public class PlayScreen implements Screen {
         world.step(1 / 60f, 6, 2);
         //updates player sprite position
         player1.update(dt);
+
         //attach the gamecam to the p1s x coordinate
         gameCam.position.x = player1.b2body.getPosition().x;
         //update gamecam with correct coordinates after changes

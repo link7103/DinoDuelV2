@@ -10,6 +10,7 @@ public interface Weapon {
     public void defineWeapon(int instruction);
     public TextureRegion getFrame();
     public void useWeapon();
+    public void update();
 
 
 }
