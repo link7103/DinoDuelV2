@@ -56,7 +56,6 @@ public class Hud {
         table.add(stageNameLabel).expandX().padTop(10);
 
 
-
         stage.addActor(table);
     }
 

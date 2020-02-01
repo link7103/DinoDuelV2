@@ -1,6 +1,7 @@
 package com.dinoduel.game.Screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -24,6 +25,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dinoduel.game.DinoDuel;
 import com.dinoduel.game.Scenes.Hud;
+import com.dinoduel.game.Sprites.Dino;
 
 import java.security.Policy;
 
@@ -41,23 +43,27 @@ public class PlayScreen implements Screen {
     private World world;
     private Box2DDebugRenderer b2dr;
 
+    //Player
+    private Dino player1;
+
     public PlayScreen(DinoDuel game) {
         this.game = game;
         //Camera that follows the players
         gameCam = new OrthographicCamera();
         //Fits the proper aspect ratio
-        gamePort = new FitViewport(DinoDuel.V_WIDTH, DinoDuel.V_HEIGHT, gameCam);
+        gamePort = new FitViewport(DinoDuel.V_WIDTH / DinoDuel.PPM, DinoDuel.V_HEIGHT / DinoDuel.PPM, gameCam);
         //Creates the hud
         hud = new Hud(game.batch);
         //Renders the map
         maploader = new TmxMapLoader();
         map = maploader.load("DinoDuel Basic Tilesets/testLevel.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map);
+        renderer = new OrthogonalTiledMapRenderer(map, 1 / DinoDuel.PPM);
         gameCam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 
-        world = new World(new Vector2(0,0), true);
+        world = new World(new Vector2(0, -10), true);
         b2dr = new Box2DDebugRenderer();
-
+        //Player1
+        player1 = new Dino(world);
         //Will be moved later into objects
         BodyDef bDef = new BodyDef();
         PolygonShape shape = new PolygonShape();
@@ -66,64 +72,79 @@ public class PlayScreen implements Screen {
 
         //the first get(x); x = layer number in tiled counting from bottom up starting at 0
         //Ground layer
-        for (MapObject object: map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)
-             ) {
+        for (MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)
+        ) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             bDef.type = BodyDef.BodyType.StaticBody;
-            bDef.position.set(rect.getX()+rect.getWidth()/2, rect.getY()+rect.getHeight()/2);
+            bDef.position.set((rect.getX() + rect.getWidth() / 2) / DinoDuel.PPM, (rect.getY() + rect.getHeight() / 2) / DinoDuel.PPM);
 
             body = world.createBody(bDef);
 
-            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2);
+            shape.setAsBox(rect.getWidth() / 2 / DinoDuel.PPM, rect.getHeight() / 2 / DinoDuel.PPM);
             fDef.shape = shape;
             body.createFixture(fDef);
         }
 
         //Guns 5
-        for (MapObject object: map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)
+        for (MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)
         ) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             bDef.type = BodyDef.BodyType.StaticBody;
-            bDef.position.set(rect.getX()+rect.getWidth()/2, rect.getY()+rect.getHeight()/2);
+            bDef.position.set((rect.getX() + rect.getWidth() / 2) / DinoDuel.PPM, (rect.getY() + rect.getHeight() / 2) / DinoDuel.PPM);
 
             body = world.createBody(bDef);
 
-            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2);
+            shape.setAsBox(rect.getWidth() / 2 / DinoDuel.PPM, rect.getHeight() / 2 / DinoDuel.PPM);
             fDef.shape = shape;
             body.createFixture(fDef);
         }
         //GunBox 6
-        for (MapObject object: map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)
+        for (MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)
         ) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             bDef.type = BodyDef.BodyType.StaticBody;
-            bDef.position.set(rect.getX()+rect.getWidth()/2, rect.getY()+rect.getHeight()/2);
+            bDef.position.set((rect.getX() + rect.getWidth() / 2) / DinoDuel.PPM, (rect.getY() + rect.getHeight() / 2) / DinoDuel.PPM);
 
             body = world.createBody(bDef);
 
-            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2);
+            shape.setAsBox(rect.getWidth() / 2 / DinoDuel.PPM, rect.getHeight() / 2 / DinoDuel.PPM);
             fDef.shape = shape;
             body.createFixture(fDef);
         }
 
     }
+
     @Override
     public void show() {
 
     }
-//dt = delta time
+
+    //dt = delta time
     public void update(float dt) {
+        //handle user input first
         handleInput(dt);
+        world.step(1 / 60f, 6, 2);
+        gameCam.position.x = player1.b2body.getPosition().x;
+        //update gamecam with correct coordinates after changes
         gameCam.update();
+        //tell it to only render what the camera can see
         renderer.setView(gameCam);
+
+
     }//end update
 
     private void handleInput(float dt) {
-        if(Gdx.input.isTouched()){
-            gameCam.position.x += 100 * dt;
+        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+            player1.b2body.applyLinearImpulse(new Vector2(0, 3f), player1.b2body.getWorldCenter(), true);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player1.b2body.getLinearVelocity().x <= 2) {
+            player1.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player1.b2body.getWorldCenter(), true);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player1.b2body.getLinearVelocity().x >= -2) {
+            player1.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player1.b2body.getWorldCenter(), true);
         }
     }//end handleInput
 
@@ -131,7 +152,7 @@ public class PlayScreen implements Screen {
     public void render(float deltaTime) {
         update(deltaTime);
 
-       //clears the game screen with black
+        //clears the game screen with black
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -142,7 +163,7 @@ public class PlayScreen implements Screen {
         //sets the batch to draw what the camera sees
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
-    }
+    }//end render
 
     @Override
     public void resize(int width, int height) {
