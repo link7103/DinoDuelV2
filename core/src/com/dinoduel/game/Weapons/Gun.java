@@ -40,17 +40,32 @@ public abstract class Gun extends Sprite implements Weapon  {
     }
 
 
+    public void defineWeapon() {
+        BodyDef bdef = new BodyDef();
+        bdef.position.set(x / DinoDuel.PPM, y / DinoDuel.PPM);
+        bdef.type = BodyDef.BodyType.DynamicBody;
+        wBody = world.createBody(bdef);
 
+        FixtureDef fdef = new FixtureDef();
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(xSize/2 / DinoDuel.PPM, ySize/2 / DinoDuel.PPM);
+
+        fdef.shape = shape;
+
+        fdef.filter.categoryBits = CATEGORY_WEAPON;
+        fdef.filter.maskBits = MASK_WEAPON;
+        wBody.createFixture(fdef);
+    }
 
     public void update() {
 
         //based off dino update class, unsure if it works. Should move it with a user if it has one.
         if (user != null) {
             wBody.setLinearVelocity(user.b2body.getLinearVelocity());
-            setPosition(user.b2body.getPosition().x, user.b2body.getPosition().y);
+            setPosition(user.b2body.getPosition().x-getWidth()/2, user.b2body.getPosition().y-getHeight()/2);
             setRegion(getFrame());
         } else {
-            setPosition(wBody.getPosition().x, wBody.getPosition().y);
+            setPosition(wBody.getPosition().x-getWidth()/2, wBody.getPosition().y-getHeight()/2);
         }
 
 

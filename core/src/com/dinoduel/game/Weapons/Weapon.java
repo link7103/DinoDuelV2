@@ -13,6 +13,7 @@ public interface Weapon  {
     TextureRegion getFrame();
     void useWeapon();
     void update();
+    void defineWeapon();
 
 
 }

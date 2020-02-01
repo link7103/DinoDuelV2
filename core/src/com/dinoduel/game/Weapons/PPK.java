@@ -17,28 +17,12 @@ public class PPK extends Gun {
         img = new TextureRegion(getTexture(), 18, 37, xSize, ySize);
 
         //unsure if necessary and will probably go int a method
-        BodyDef bdef = new BodyDef();
-        bdef.position.set(32 / DinoDuel.PPM, 32 / DinoDuel.PPM);
-        bdef.type = BodyDef.BodyType.DynamicBody;
-        wBody = world.createBody(bdef);
-
-        FixtureDef fdef = new FixtureDef();
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(3 / DinoDuel.PPM, 8 / DinoDuel.PPM);
-
-        fdef.shape = shape;
-
-        fdef.filter.categoryBits = CATEGORY_WEAPON;
-        fdef.filter.maskBits = MASK_WEAPON;
-        wBody.createFixture(fdef);
-
-
-
+        defineWeapon();
 
 
         setBounds(0, 0, xSize / DinoDuel.PPM, ySize / DinoDuel.PPM);
         setRegion(img);
-        setPosition(32/DinoDuel.PPM, 32/DinoDuel.PPM);
+        setPosition(wBody.getPosition().x/DinoDuel.PPM-getWidth()/2, wBody.getPosition().y/DinoDuel.PPM-getHeight()/2);
     }
 
     @Override
