@@ -29,7 +29,7 @@ public abstract class Gun extends Sprite implements Weapon  {
     private int ySize;
 
     public Gun (int x, int y, World world, PlayScreen screen) {
-        super();
+        // FIXME: 2020-02-01 super(screen.weaponAtlas.findRegion(""));
         this.x = x;
         this.y = y;
         this.world = world;
