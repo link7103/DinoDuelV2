@@ -26,6 +26,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dinoduel.game.DinoDuel;
 import com.dinoduel.game.Scenes.Hud;
 import com.dinoduel.game.Sprites.Dino;
+import com.dinoduel.game.Tools.B2WorldCreator;
 
 import java.security.Policy;
 
@@ -62,58 +63,13 @@ public class PlayScreen implements Screen {
 
         world = new World(new Vector2(0, -10), true);
         b2dr = new Box2DDebugRenderer();
+
+
+        new B2WorldCreator(world, map);
+
         //Player1
         player1 = new Dino(world);
-        //Will be moved later into objects
-        BodyDef bDef = new BodyDef();
-        PolygonShape shape = new PolygonShape();
-        FixtureDef fDef = new FixtureDef();
-        Body body;
 
-        //the first get(x); x = layer number in tiled counting from bottom up starting at 0
-        //Ground layer
-        for (MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)
-        ) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-            bDef.type = BodyDef.BodyType.StaticBody;
-            bDef.position.set((rect.getX() + rect.getWidth() / 2) / DinoDuel.PPM, (rect.getY() + rect.getHeight() / 2) / DinoDuel.PPM);
-
-            body = world.createBody(bDef);
-
-            shape.setAsBox(rect.getWidth() / 2 / DinoDuel.PPM, rect.getHeight() / 2 / DinoDuel.PPM);
-            fDef.shape = shape;
-            body.createFixture(fDef);
-        }
-
-        //Guns 5
-        for (MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)
-        ) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-            bDef.type = BodyDef.BodyType.StaticBody;
-            bDef.position.set((rect.getX() + rect.getWidth() / 2) / DinoDuel.PPM, (rect.getY() + rect.getHeight() / 2) / DinoDuel.PPM);
-
-            body = world.createBody(bDef);
-
-            shape.setAsBox(rect.getWidth() / 2 / DinoDuel.PPM, rect.getHeight() / 2 / DinoDuel.PPM);
-            fDef.shape = shape;
-            body.createFixture(fDef);
-        }
-        //GunBox 6
-        for (MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)
-        ) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-            bDef.type = BodyDef.BodyType.StaticBody;
-            bDef.position.set((rect.getX() + rect.getWidth() / 2) / DinoDuel.PPM, (rect.getY() + rect.getHeight() / 2) / DinoDuel.PPM);
-
-            body = world.createBody(bDef);
-
-            shape.setAsBox(rect.getWidth() / 2 / DinoDuel.PPM, rect.getHeight() / 2 / DinoDuel.PPM);
-            fDef.shape = shape;
-            body.createFixture(fDef);
-        }
 
     }
 
@@ -187,6 +143,11 @@ public class PlayScreen implements Screen {
 
     @Override
     public void dispose() {
+        map.dispose();
+        renderer.dispose();
+        world.dispose();
+        b2dr.dispose();
+        hud.dispose();
 
     }
 }
