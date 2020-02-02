@@ -84,7 +84,7 @@ public class PlayScreen implements Screen {
         b2dr = new Box2DDebugRenderer();
         new B2WorldCreator(world, map, this);
         //Player1
-        player1 = new Dino(world, this, "DinoSprites - doux",0);
+        player1 = new Dino(world, this, "DinoSprites - doux", 0);
         player2 = new Dino(world, this, "DinoSprites - tard", 48);
 
         //Barrett test
@@ -159,7 +159,7 @@ public class PlayScreen implements Screen {
         //attach the gamecam to the p1s x and y coordinate
         // setCameraPosition();
         gameCam.position.x = player1.b2body.getPosition().x;
-       // setCameraPosition();
+        // setCameraPosition();
         gameCam.update();
 
         //tell it to only render what the camera can see
@@ -198,11 +198,10 @@ public class PlayScreen implements Screen {
             player2.playerDucking = false;
         }
 
-        //calls the pickup method
-        //if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
-        //    Gdx.app.log("playcreen", "keypressed");
-        //   player1.pickupGun(guns);
-        //}
+        //calls the pickup method for player1
+        if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
+            player1.pickupGun(guns);
+        }
     }//end handleInput
 
     @Override

@@ -89,9 +89,9 @@ public class Dino extends Sprite {
     public void update(float dt) { //Updates the sprite every frame
         if(playerDucking && currentState != State.FALLING && currentState != State.JUMPING) {
             if(runningRight){
-                setPosition(b2body.getPosition().x - (float)0.025 - getWidth() / 2, b2body.getPosition().y + (float) 0.02 - getHeight() / 2);
+                setPosition(b2body.getPosition().x - (float)0.025 - getWidth() / 2, b2body.getPosition().y + (float) 0.0125 - getHeight() / 2);
             }else{
-                setPosition(b2body.getPosition().x + (float)0.025 - getWidth() / 2, b2body.getPosition().y + (float) 0.02 - getHeight() / 2);
+                setPosition(b2body.getPosition().x + (float)0.025 - getWidth() / 2, b2body.getPosition().y + (float) 0.0125 - getHeight() / 2);
 
             }
         }else {
@@ -304,10 +304,9 @@ public class Dino extends Sprite {
 
 
     public void pickupGun(ArrayList<Gun> guns) {
-
         for (Gun gun: guns
              ) {
-            Gdx.app.log("Run", "Run");
+            //Gdx.app.log("Run", "Run");
             if ((this.b2body.getPosition().x-getWidth()/2 <= gun.wBody.getPosition().x+gun.getWidth()/2 && this.b2body.getPosition().x-getWidth()/2 >= gun.wBody.getPosition().x-gun.getWidth()/2) || (this.b2body.getPosition().x+getWidth()/2 <= gun.wBody.getPosition().x+gun.getWidth()/2 && this.b2body.getPosition().x+getWidth()/2 >= gun.wBody.getPosition().x-gun.getWidth()/2)) {
                 Gdx.app.log("Dino", "x");
                 if ((this.b2body.getPosition().y < gun.wBody.getPosition().y+gun.getHeight()/2 && this.b2body.getPosition().y > gun.wBody.getPosition().y-gun.getHeight()/2) || (this.b2body.getPosition().y <= gun.wBody.getPosition().y+gun.getHeight()/2 && this.b2body.getPosition().y >= gun.wBody.getPosition().y-gun.getHeight()/2)) {
@@ -316,5 +315,4 @@ public class Dino extends Sprite {
             }
         }
     }
-
 }//end Dino
