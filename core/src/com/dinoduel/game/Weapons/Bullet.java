@@ -22,16 +22,16 @@ public class Bullet extends Sprite {
     public Body bBody;
     public World world;
     private TextureRegion img;
-    private Dino target;
+    private Dino user;
 
-    public Bullet (Vector2 s, int dr, int dm, int x, int y, Dino t, PlayScreen screen) {
+    public Bullet (Vector2 s, int dr, int dm, int x, int y, Dino u, PlayScreen screen) {
         super(screen.getweaponAtlas().findRegion("guns"));
         this.speed = s;
         this.duration = dr;
         this.damage = dm;
         this.x = x;
         this.y= y;
-        this.target = t;
+        this.user = u;
 
         img = new TextureRegion(getTexture(), 27, 29, 4, 3);
 

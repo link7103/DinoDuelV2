@@ -26,20 +26,7 @@ public abstract class InteractiveTileObject {
         this.map = map;
         this.bounds = bounds;
 
-        BodyDef bDef = new BodyDef();
-        FixtureDef fDef = new FixtureDef();
-        PolygonShape shape = new PolygonShape();
 
-        bDef.type = BodyDef.BodyType.StaticBody;
-        bDef.position.set((bounds.getX() + bounds.getWidth() / 2) / DinoDuel.PPM, (bounds.getY() + bounds.getHeight() / 2) / DinoDuel.PPM);
-
-        body = world.createBody(bDef);
-
-        shape.setAsBox(bounds.getWidth() / 2 / DinoDuel.PPM, bounds.getHeight() / 2 / DinoDuel.PPM);
-        fDef.shape = shape;
-        fDef.filter.categoryBits = B2WorldCreator.CATEGORY_SCENERY;
-        fDef.filter.maskBits = B2WorldCreator.MASK_SCENERY;
-        fixture = body.createFixture(fDef);
     }
 
     public abstract void onHeadHit();

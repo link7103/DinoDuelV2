@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -55,9 +56,10 @@ public abstract class Gun extends Sprite implements Weapon  {
 
         fdef.shape = shape;
 
-        fdef.filter.categoryBits = CATEGORY_WEAPON;
-        fdef.filter.maskBits = MASK_WEAPON;
+        fdef.filter.categoryBits = DinoDuel.CATEGORY_WEAPON;
+        fdef.filter.maskBits = DinoDuel.MASK_WEAPON;
         fixture = wBody.createFixture(fdef);
+
 
     }
 

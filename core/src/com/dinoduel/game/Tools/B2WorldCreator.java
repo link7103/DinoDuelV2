@@ -19,8 +19,7 @@ import java.util.ArrayList;
 
 public class B2WorldCreator {
 
-    public static final short CATEGORY_SCENERY = 0x0004;
-    public static final short MASK_SCENERY = -1;
+
     public B2WorldCreator(World world, TiledMap map, PlayScreen screen) {
 
         BodyDef bDef = new BodyDef();
@@ -42,8 +41,8 @@ public class B2WorldCreator {
 
             shape.setAsBox(rect.getWidth() / 2 / DinoDuel.PPM, rect.getHeight() / 2 / DinoDuel.PPM);
             fDef.shape = shape;
-            fDef.filter.categoryBits = CATEGORY_SCENERY;
-            fDef.filter.maskBits = MASK_SCENERY;
+            fDef.filter.categoryBits = DinoDuel.CATEGORY_SCENERY;
+            fDef.filter.maskBits = DinoDuel.MASK_SCENERY;
             fixture = body.createFixture(fDef);
             fixture.setUserData("ground");
 
@@ -61,8 +60,8 @@ public class B2WorldCreator {
 
             shape.setAsBox(rect.getWidth() / 2 / DinoDuel.PPM, rect.getHeight() / 2 / DinoDuel.PPM);
             fDef.shape = shape;
-            fDef.filter.categoryBits = CATEGORY_SCENERY;
-            fDef.filter.maskBits = MASK_SCENERY;
+            fDef.filter.categoryBits = DinoDuel.CATEGORY_SCENERY;
+            fDef.filter.maskBits = DinoDuel.MASK_SCENERY;
             fixture = body.createFixture(fDef);
             fixture.setUserData("ground");
         }

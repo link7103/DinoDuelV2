@@ -18,7 +18,10 @@ import com.badlogic.gdx.utils.Array;
 import com.dinoduel.game.DinoDuel;
 import com.dinoduel.game.Screens.PlayScreen;
 import com.dinoduel.game.Tools.B2WorldCreator;
+import com.dinoduel.game.Weapons.Gun;
 import com.dinoduel.game.Weapons.Weapon;
+
+import java.util.ArrayList;
 
 
 public class Dino extends Sprite {
@@ -27,8 +30,7 @@ public class Dino extends Sprite {
 
     public State currentState;
     public State previousState;
-    public static final short CATEGORY_DINO = 0x0001;
-    public static final short MASK_DINO = CATEGORY_DINO | B2WorldCreator.CATEGORY_SCENERY;
+
     public World world;
     public Body b2body;
     private TextureRegion dinoIdle0;
@@ -193,8 +195,8 @@ public class Dino extends Sprite {
             shape.setAsBox(3 / DinoDuel.PPM, 8 / DinoDuel.PPM);
 
             fdef.shape = shape;
-            fdef.filter.categoryBits = CATEGORY_DINO;
-            fdef.filter.maskBits = MASK_DINO;
+            fdef.filter.categoryBits = DinoDuel.CATEGORY_DINO;
+            fdef.filter.maskBits = DinoDuel.MASK_DINO;
             b2body.createFixture(fdef);
             b2body.createFixture(fdef).setUserData("body");
 
@@ -236,8 +238,8 @@ public class Dino extends Sprite {
                 shape.setAsBox(8 / DinoDuel.PPM, (float)6.65 / DinoDuel.PPM);
 
                 fdef.shape = shape;
-                fdef.filter.categoryBits = CATEGORY_DINO;
-                fdef.filter.maskBits = MASK_DINO;
+                fdef.filter.categoryBits = DinoDuel.CATEGORY_DINO;
+                fdef.filter.maskBits = DinoDuel.MASK_DINO;
                 b2body.createFixture(fdef);
                 b2body.setLinearVelocity(currentVelocity);
 
@@ -266,8 +268,8 @@ public class Dino extends Sprite {
                 shape.setAsBox(3 / DinoDuel.PPM, 8 / DinoDuel.PPM);
 
                 fdef.shape = shape;
-                fdef.filter.categoryBits = CATEGORY_DINO;
-                fdef.filter.maskBits = MASK_DINO;
+                fdef.filter.categoryBits = DinoDuel.CATEGORY_DINO;
+                fdef.filter.maskBits = DinoDuel.MASK_DINO;
                 b2body.createFixture(fdef);
                 b2body.createFixture(fdef).setUserData("body");
 
@@ -298,5 +300,21 @@ public class Dino extends Sprite {
 
 
     }//end defineDino
+
+
+
+    public void pickupGun(ArrayList<Gun> guns) {
+
+        for (Gun gun: guns
+             ) {
+            Gdx.app.log("Run", "Run");
+            if ((this.b2body.getPosition().x-getWidth()/2 <= gun.wBody.getPosition().x+gun.getWidth()/2 && this.b2body.getPosition().x-getWidth()/2 >= gun.wBody.getPosition().x-gun.getWidth()/2) || (this.b2body.getPosition().x+getWidth()/2 <= gun.wBody.getPosition().x+gun.getWidth()/2 && this.b2body.getPosition().x+getWidth()/2 >= gun.wBody.getPosition().x-gun.getWidth()/2)) {
+                Gdx.app.log("Dino", "x");
+                if ((this.b2body.getPosition().y < gun.wBody.getPosition().y+gun.getHeight()/2 && this.b2body.getPosition().y > gun.wBody.getPosition().y-gun.getHeight()/2) || (this.b2body.getPosition().y <= gun.wBody.getPosition().y+gun.getHeight()/2 && this.b2body.getPosition().y >= gun.wBody.getPosition().y-gun.getHeight()/2)) {
+                    Gdx.app.log("Dino", "y");
+                }
+            }
+        }
+    }
 
 }//end Dino

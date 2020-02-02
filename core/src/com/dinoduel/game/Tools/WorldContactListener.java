@@ -6,8 +6,11 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.dinoduel.game.Sprites.Dino;
 import com.dinoduel.game.Sprites.InteractiveTileObject;
 import com.dinoduel.game.Weapons.Bullet;
+import com.dinoduel.game.Weapons.Gun;
+import com.dinoduel.game.Weapons.Weapon;
 
 public class WorldContactListener implements ContactListener {
     @Override
@@ -32,6 +35,14 @@ public class WorldContactListener implements ContactListener {
             Fixture bullet = side == fixA ? fixB : fixA;
 
             ((Bullet) bullet.getUserData()).hit();
+        }
+
+        //pickuo detection
+        if ((fixA.getUserData() == "gun" || fixB.getUserData() == "gun") && (fixA.getUserData() == "body" || fixB.getUserData() == "body")) {
+            Fixture body = fixA.getUserData() == "gun" ? fixA : fixB;
+            Fixture gun = body == fixA ? fixB : fixA;
+
+            //((Dino) body.getUserData()).pickupGun(((Gun)gun));
         }
     }
 

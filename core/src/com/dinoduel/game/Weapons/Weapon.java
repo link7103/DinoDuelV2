@@ -8,8 +8,7 @@ import com.dinoduel.game.Tools.B2WorldCreator;
 
 public interface Weapon  {
     Dino user = null;
-    short CATEGORY_WEAPON = 0x0002;
-    short MASK_WEAPON = 0x0004;
+
 
     TextureRegion getFrame();
     void useWeapon();

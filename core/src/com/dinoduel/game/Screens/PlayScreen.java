@@ -172,6 +172,12 @@ public class PlayScreen implements Screen {
         } else {
             player1.playerDucking = false;
         }
+
+        //calls the pickup method
+        //if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
+        //    Gdx.app.log("playcreen", "keypressed");
+         //   player1.pickupGun(guns);
+        //}
     }//end handleInput
 
     @Override
