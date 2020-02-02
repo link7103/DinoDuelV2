@@ -1,20 +1,18 @@
 package com.dinoduel.game.Weapons;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.dinoduel.game.DinoDuel;
 import com.dinoduel.game.Screens.PlayScreen;
 
-public class PPK extends Gun {
-    public PPK(int x, int y, World world, PlayScreen screen) {
+public class AK extends Gun {
+    public AK(int x, int y, World world, PlayScreen screen) {
 
         super(x, y, world, screen);
-        xSize = 16;
-        ySize = 12;
-        img = new TextureRegion(getTexture(), 18, 37, xSize, ySize);
+        xSize = 55;
+        ySize = 15;
+        //fix sizing
+        img = new TextureRegion(getTexture(), 80, 155, xSize, ySize);
 
 
         defineWeapon();
@@ -30,3 +28,4 @@ public class PPK extends Gun {
 
     }
 }
+

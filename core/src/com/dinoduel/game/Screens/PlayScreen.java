@@ -5,34 +5,24 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dinoduel.game.DinoDuel;
 import com.dinoduel.game.Scenes.Hud;
 import com.dinoduel.game.Sprites.Dino;
 import com.dinoduel.game.Tools.B2WorldCreator;
+import com.dinoduel.game.Tools.WorldContactListener;
+import com.dinoduel.game.Weapons.Barrett;
 import com.dinoduel.game.Weapons.Gun;
+import com.dinoduel.game.Weapons.Mossberg;
 import com.dinoduel.game.Weapons.PPK;
-import com.dinoduel.game.Weapons.Weapon;
-
-import java.security.Policy;
 
 public class PlayScreen implements Screen {
     //Main Game
@@ -56,7 +46,7 @@ public class PlayScreen implements Screen {
     //Weapon Sprites
     public TextureAtlas weaponAtlas;
 
-    private Gun pistol;
+    private Gun gun;
 
     public PlayScreen(DinoDuel game) {
         dinoAtlas = new TextureAtlas("Dinos/DinoSprites.txt");
@@ -81,8 +71,11 @@ public class PlayScreen implements Screen {
         new B2WorldCreator(world, map);
         //Player1
         player1 = new Dino(world, this);
-        //PPK test
-        pistol = new PPK(40, 32, world, this);
+        //Barrett test
+        gun = new Mossberg(40, 32, world, this);
+
+        //contact listener stuff
+        world.setContactListener(new WorldContactListener());
     }//end constructor
 
     public TextureAtlas getDinoAtlas() {
@@ -105,7 +98,7 @@ public class PlayScreen implements Screen {
         world.step(1 / 60f, 6, 2);
         //updates player sprite position
         player1.update(dt);
-        pistol.update();
+        gun.update();
 
         //attach the gamecam to the p1s x coordinate
         gameCam.position.x = player1.b2body.getPosition().x;
@@ -152,8 +145,8 @@ public class PlayScreen implements Screen {
         game.batch.begin();
         player1.draw(game.batch);
 
-        //might render pistol
-        pistol.draw(game.batch);
+        //might render gun
+        gun.draw(game.batch);
         game.batch.end();
 
         //sets the batch to draw what the camera sees
