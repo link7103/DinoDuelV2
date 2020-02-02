@@ -157,9 +157,10 @@ public class PlayScreen implements Screen {
 
 
         //attach the gamecam to the p1s x and y coordinate
-        // setCameraPosition();
         gameCam.position.x = player1.b2body.getPosition().x;
-        // setCameraPosition();
+        gameCam.position.y = player1.b2body.getPosition().y;
+
+        setCameraPosition();
         gameCam.update();
 
         //tell it to only render what the camera can see
@@ -238,6 +239,46 @@ public class PlayScreen implements Screen {
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
     }//end render
+
+    public void setCameraPosition() {
+        //Fix Camera Bounds
+        // These values will need to be scaled according to the world coordinates. (for each map/level)
+        int x = 4;
+        float y = (float)2.41;
+// The left boundary of the map (x)
+        int mapLeft = 0;
+// The right boundary of the map (x + width)
+        float mapRight = 0 + x;
+// The bottom boundary of the map (y)
+        int mapBottom = 0;
+// The top boundary of the map (y + height)
+        float mapTop = 0 + y;
+// The camera dimensions, halved
+        float cameraHalfWidth = gameCam.viewportWidth * .5f;
+        float cameraHalfHeight = gameCam.viewportHeight * .5f;
+
+// Move camera after player as normal
+        float cameraLeft = gameCam.position.x - cameraHalfWidth;
+        float cameraRight = gameCam.position.x + cameraHalfWidth;
+        float cameraBottom = gameCam.position.y - cameraHalfHeight;
+        float cameraTop = gameCam.position.y + cameraHalfHeight;
+// Horizontal axis
+        if (x < gameCam.viewportWidth) {
+            gameCam.position.x = mapRight / 2;
+        } else if (cameraLeft <= mapLeft) {
+            gameCam.position.x = mapLeft + cameraHalfWidth;
+        } else if (cameraRight >= mapRight) {
+            gameCam.position.x = mapRight - cameraHalfWidth;
+        }
+// Vertical axis
+        if (y < gameCam.viewportHeight) {
+            gameCam.position.y = mapTop / 2;
+        } else if (cameraBottom <= mapBottom) {
+            gameCam.position.y = mapBottom + cameraHalfHeight;
+        } else if (cameraTop >= mapTop) {
+            gameCam.position.y = mapTop - cameraHalfHeight;
+        }
+    }//end setCameraPosition
 
     @Override
     public void resize(int width, int height) {
