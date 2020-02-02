@@ -47,6 +47,7 @@ public class PlayScreen implements Screen {
 
     //Player
     private Dino player1;
+    private Dino player2;
     //Player Sprites
     private TextureAtlas dinoAtlas;
     //Weapon Sprites
@@ -83,7 +84,9 @@ public class PlayScreen implements Screen {
         b2dr = new Box2DDebugRenderer();
         new B2WorldCreator(world, map, this);
         //Player1
-        player1 = new Dino(world, this);
+        player1 = new Dino(world, this, "DinoSprites - doux",0);
+        player2 = new Dino(world, this, "DinoSprites - tard", 48);
+
         //Barrett test
         gun = new Mossberg(40, 32, world, this);
         guns.add(gun);
@@ -145,6 +148,8 @@ public class PlayScreen implements Screen {
         }
         //updates player sprite position
         player1.update(dt);
+        player2.update(dt);
+
         for (Gun gunU : guns
         ) {
             gunU.update();
@@ -162,6 +167,7 @@ public class PlayScreen implements Screen {
     }//end update
 
     private void handleInput(float dt) {
+        //Player1
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
             player1.b2body.applyLinearImpulse(new Vector2(0, 3f), player1.b2body.getWorldCenter(), true);
         }
@@ -175,6 +181,21 @@ public class PlayScreen implements Screen {
             player1.playerDucking = true;
         } else {
             player1.playerDucking = false;
+        }
+        //Player2
+        if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
+            player2.b2body.applyLinearImpulse(new Vector2(0, 3f), player2.b2body.getWorldCenter(), true);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.D) && player2.b2body.getLinearVelocity().x <= 2) {
+            player2.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player2.b2body.getWorldCenter(), true);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.A) && player2.b2body.getLinearVelocity().x >= -2) {
+            player2.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player2.b2body.getWorldCenter(), true);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+            player2.playerDucking = true;
+        } else {
+            player2.playerDucking = false;
         }
 
         //calls the pickup method
@@ -210,6 +231,8 @@ public class PlayScreen implements Screen {
         }
 
         player1.draw(game.batch);
+        player2.draw(game.batch);
+
         game.batch.end();
 
         //sets the batch to draw what the camera sees

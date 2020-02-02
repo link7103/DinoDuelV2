@@ -44,9 +44,9 @@ public class Dino extends Sprite {
     public boolean playerDucking = true;
     private Weapon weapon;
 
-    public Dino(World world, PlayScreen screen) {
+    public Dino(World world, PlayScreen screen, String name, int spriteStartingYValue) {
         //Initialize Variables
-        super(screen.getDinoAtlas().findRegion("DinoSprites - doux"));
+        super(screen.getDinoAtlas().findRegion(name));
         this.world = world;
         currentState = State.STANDING;
         previousState = State.STANDING;
@@ -56,32 +56,32 @@ public class Dino extends Sprite {
         //Sets up the various animations - will need to adjust the y value for subsequent players
         Array<TextureRegion> frames = new Array<TextureRegion>();
         for (int i = 0; i < 3; i++) {
-            frames.add(new TextureRegion(getTexture(), i * 24, 0, 24, 24));
+            frames.add(new TextureRegion(getTexture(), i * 24, spriteStartingYValue, 24, 24));
         }
         dinoIdle = new Animation(0.1f, frames);
         frames.clear();
 
         for (int i = 4; i < 9; i++) {
-            frames.add(new TextureRegion(getTexture(), i * 24, 0, 24, 24));
+            frames.add(new TextureRegion(getTexture(), i * 24, spriteStartingYValue, 24, 24));
         }
         dinoRun = new Animation(0.1f, frames);
         frames.clear();
 
         for (int i = 11; i < 13; i++) {
-            frames.add(new TextureRegion(getTexture(), i * 24, 0, 24, 24));
+            frames.add(new TextureRegion(getTexture(), i * 24, spriteStartingYValue, 24, 24));
         }
         dinoJump = new Animation(0.1f, frames);
         frames.clear();
 
         for (int i = 18; i < 23; i++) {
-            frames.add(new TextureRegion(getTexture(), i * 24, 0, 24, 24));
+            frames.add(new TextureRegion(getTexture(), i * 24, spriteStartingYValue, 24, 24));
         }
         dinoDuckRun = new Animation(0.1f, frames);
         frames.clear();
         //Finishes setting up the dino and sets its sprite.
         defineDino(0);
-        dinoIdle0 = new TextureRegion(getTexture(), 0, 0, 24, 24);
-        dinoDuck = new TextureRegion(getTexture(), 17 * 24, 0, 24, 24);
+        dinoIdle0 = new TextureRegion(getTexture(), 0, spriteStartingYValue, 24, 24);
+        dinoDuck = new TextureRegion(getTexture(), 17 * 24, spriteStartingYValue, 24, 24);
         setBounds(0, 0, 24 / DinoDuel.PPM, 24 / DinoDuel.PPM);
         setRegion(dinoIdle0);
     }//end constructor
@@ -89,9 +89,9 @@ public class Dino extends Sprite {
     public void update(float dt) { //Updates the sprite every frame
         if(playerDucking && currentState != State.FALLING && currentState != State.JUMPING) {
             if(runningRight){
-                setPosition(b2body.getPosition().x - (float)0.025 - getWidth() / 2, b2body.getPosition().y + (float) 0.01 - getHeight() / 2);
+                setPosition(b2body.getPosition().x - (float)0.025 - getWidth() / 2, b2body.getPosition().y + (float) 0.02 - getHeight() / 2);
             }else{
-                setPosition(b2body.getPosition().x + (float)0.025 - getWidth() / 2, b2body.getPosition().y + (float) 0.01 - getHeight() / 2);
+                setPosition(b2body.getPosition().x + (float)0.025 - getWidth() / 2, b2body.getPosition().y + (float) 0.02 - getHeight() / 2);
 
             }
         }else {
