@@ -1,5 +1,6 @@
 package com.dinoduel.game.Weapons;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.World;
 import com.dinoduel.game.DinoDuel;
@@ -10,6 +11,7 @@ public class Mossberg extends Gun {
     public Mossberg(int x, int y, World world, PlayScreen screen) {
 
         super(x, y, world, screen);
+
         xSize = 37;
         ySize = 12;
 
@@ -17,6 +19,7 @@ public class Mossberg extends Gun {
 
 
         defineWeapon();
+        fixture.setUserData("gun");
 
 
         setBounds(0, 0, xSize / DinoDuel.PPM, ySize / DinoDuel.PPM);

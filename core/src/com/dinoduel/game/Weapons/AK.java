@@ -16,6 +16,7 @@ public class AK extends Gun {
 
 
         defineWeapon();
+        fixture.setUserData("gun");
 
 
         setBounds(0, 0, xSize / DinoDuel.PPM, ySize / DinoDuel.PPM);

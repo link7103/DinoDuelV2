@@ -196,7 +196,17 @@ public class Dino extends Sprite {
             fdef.filter.categoryBits = CATEGORY_DINO;
             fdef.filter.maskBits = MASK_DINO;
             b2body.createFixture(fdef);
+            b2body.createFixture(fdef).setUserData("body");
+
+            //head sensor
             EdgeShape head = new EdgeShape();
+            head.set(new Vector2(-5/DinoDuel.PPM, 8/DinoDuel.PPM ), new Vector2(5/DinoDuel.PPM, 8/DinoDuel.PPM ));
+            fdef.shape = head;
+            fdef.isSensor = true;
+            b2body.createFixture(fdef).setUserData("head1");
+
+
+
         } else {
             Vector2 currentPosition = b2body.getPosition();
             Vector2 currentVelocity = b2body.getLinearVelocity();
@@ -215,6 +225,15 @@ public class Dino extends Sprite {
                 fdef.filter.maskBits = MASK_DINO;
                 b2body.createFixture(fdef);
                 b2body.setLinearVelocity(currentVelocity);
+
+    /*            EdgeShape head = new EdgeShape();
+                head.set(new Vector2(-4/DinoDuel.PPM, (float)6.65/DinoDuel.PPM ), new Vector2(4/DinoDuel.PPM, (float)6.65/DinoDuel.PPM ));
+                fdef.shape = head;
+                fdef.isSensor = true;
+                b2body.createFixture(fdef).setUserData("head");
+                //probably not needed as cannot jump while ducked
+
+     */
             } else {//Unduck
                 bdef.type = BodyDef.BodyType.DynamicBody;
                 b2body = world.createBody(bdef);
@@ -227,6 +246,15 @@ public class Dino extends Sprite {
                 fdef.filter.categoryBits = CATEGORY_DINO;
                 fdef.filter.maskBits = MASK_DINO;
                 b2body.createFixture(fdef);
+                b2body.createFixture(fdef).setUserData("body");
+
+                //head sensor
+                EdgeShape head = new EdgeShape();
+                head.set(new Vector2(-5/DinoDuel.PPM, 8/DinoDuel.PPM ), new Vector2(5/DinoDuel.PPM, 8/DinoDuel.PPM ));
+                fdef.shape = head;
+                fdef.isSensor = true;
+                b2body.createFixture(fdef).setUserData("head1");
+
                 b2body.setLinearVelocity(currentVelocity);
 
             }

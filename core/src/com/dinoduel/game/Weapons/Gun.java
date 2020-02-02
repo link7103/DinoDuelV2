@@ -3,8 +3,10 @@ package com.dinoduel.game.Weapons;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -20,7 +22,7 @@ public abstract class Gun extends Sprite implements Weapon  {
     protected int ammo;
     protected int magCap;
     ArrayList<Bullet> mag = new ArrayList<Bullet>();
-    protected int speed;
+    protected Vector2 speed;
     protected int duration;
     protected int damage;
     protected int x;
@@ -28,6 +30,7 @@ public abstract class Gun extends Sprite implements Weapon  {
     protected int xSize;
     protected int ySize;
     protected boolean right;
+    protected Fixture fixture;
 
     public Gun (int x, int y, World world, PlayScreen screen) {
         super(screen.getweaponAtlas().findRegion("guns"));
@@ -54,7 +57,8 @@ public abstract class Gun extends Sprite implements Weapon  {
 
         fdef.filter.categoryBits = CATEGORY_WEAPON;
         fdef.filter.maskBits = MASK_WEAPON;
-        wBody.createFixture(fdef);
+        fixture = wBody.createFixture(fdef);
+
     }
 
     public void update() {

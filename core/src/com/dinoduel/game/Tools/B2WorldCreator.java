@@ -1,16 +1,20 @@
 package com.dinoduel.game.Tools;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.dinoduel.game.DinoDuel;
 import com.dinoduel.game.Sprites.GunBox;
+
+import java.util.ArrayList;
 
 public class B2WorldCreator {
 
@@ -22,6 +26,7 @@ public class B2WorldCreator {
         PolygonShape shape = new PolygonShape();
         FixtureDef fDef = new FixtureDef();
         Body body;
+        Fixture fixture;
 
         //the first get(x); x = layer number in tiled counting from bottom up starting at 0
         //Ground layer
@@ -38,7 +43,9 @@ public class B2WorldCreator {
             fDef.shape = shape;
             fDef.filter.categoryBits = CATEGORY_SCENERY;
             fDef.filter.maskBits = MASK_SCENERY;
-            body.createFixture(fDef);
+            fixture = body.createFixture(fDef);
+            fixture.setUserData("ground");
+
         }
 
         //Guns 5
@@ -55,7 +62,8 @@ public class B2WorldCreator {
             fDef.shape = shape;
             fDef.filter.categoryBits = CATEGORY_SCENERY;
             fDef.filter.maskBits = MASK_SCENERY;
-            body.createFixture(fDef);
+            fixture = body.createFixture(fDef);
+            fixture.setUserData("ground");
         }
         //GunBox 6
         for (MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)
