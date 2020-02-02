@@ -65,7 +65,7 @@ public class Bullet extends Sprite {
         // TODO: 2020-02-01 make sure that it is oriented on the correct side of the bullet
         //leading edge of bullet
         EdgeShape side = new EdgeShape();
-        side.set(new Vector2(3/DinoDuel.PPM, 0/DinoDuel.PPM), new Vector2(3/DinoDuel.PPM, 8/DinoDuel.PPM));
+        side.set(new Vector2(2/DinoDuel.PPM, (float)-1.5/DinoDuel.PPM), new Vector2(2/DinoDuel.PPM, (float)1.5/DinoDuel.PPM));
         fdef.shape = side;
         fdef.isSensor = true;
         bBody.createFixture(fdef).setUserData("side");

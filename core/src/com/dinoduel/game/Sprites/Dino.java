@@ -207,13 +207,13 @@ public class Dino extends Sprite {
 
             //side sensors
             EdgeShape right = new EdgeShape();
-            right.set(new Vector2(3/DinoDuel.PPM, 0/DinoDuel.PPM), new Vector2(3/DinoDuel.PPM, 8/DinoDuel.PPM));
+            right.set(new Vector2(3/DinoDuel.PPM, -8/DinoDuel.PPM), new Vector2(5/DinoDuel.PPM, 8/DinoDuel.PPM));
             fdef.shape = right;
             fdef.isSensor = true;
             b2body.createFixture(fdef).setUserData("side");
 
             EdgeShape left = new EdgeShape();
-            left.set(new Vector2(-3/DinoDuel.PPM, 0/DinoDuel.PPM), new Vector2(-3/DinoDuel.PPM, 8/DinoDuel.PPM));
+            left.set(new Vector2(-3/DinoDuel.PPM, -8/DinoDuel.PPM), new Vector2(-5/DinoDuel.PPM, 8/DinoDuel.PPM));
             fdef.shape = left;
             fdef.isSensor = true;
             b2body.createFixture(fdef).setUserData("side");
@@ -241,14 +241,22 @@ public class Dino extends Sprite {
                 b2body.createFixture(fdef);
                 b2body.setLinearVelocity(currentVelocity);
 
-    /*            EdgeShape head = new EdgeShape();
-                head.set(new Vector2(-4/DinoDuel.PPM, (float)6.65/DinoDuel.PPM ), new Vector2(4/DinoDuel.PPM, (float)6.65/DinoDuel.PPM ));
-                fdef.shape = head;
-                fdef.isSensor = true;
-                b2body.createFixture(fdef).setUserData("head");
-                //probably not needed as cannot jump while ducked
 
-     */
+
+                //side sensors
+                EdgeShape right = new EdgeShape();
+                right.set(new Vector2(8/DinoDuel.PPM, -(float)6.65/DinoDuel.PPM), new Vector2(8/DinoDuel.PPM, (float)6.65/DinoDuel.PPM));
+                fdef.shape = right;
+                fdef.isSensor = true;
+                b2body.createFixture(fdef).setUserData("side");
+
+                EdgeShape left = new EdgeShape();
+                left.set(new Vector2(-8/DinoDuel.PPM, -(float)6.65/DinoDuel.PPM), new Vector2(-8/DinoDuel.PPM, (float)6.65/DinoDuel.PPM));
+                fdef.shape = left;
+                fdef.isSensor = true;
+                b2body.createFixture(fdef).setUserData("side");
+
+
             } else {//Unduck
                 bdef.type = BodyDef.BodyType.DynamicBody;
                 b2body = world.createBody(bdef);
@@ -272,13 +280,13 @@ public class Dino extends Sprite {
 
                 //side sensors
                 EdgeShape right = new EdgeShape();
-                right.set(new Vector2(3/DinoDuel.PPM, 0/DinoDuel.PPM), new Vector2(3/DinoDuel.PPM, 8/DinoDuel.PPM));
+                right.set(new Vector2(3/DinoDuel.PPM, -8/DinoDuel.PPM), new Vector2(5/DinoDuel.PPM, 8/DinoDuel.PPM));
                 fdef.shape = right;
                 fdef.isSensor = true;
                 b2body.createFixture(fdef).setUserData("side");
 
                 EdgeShape left = new EdgeShape();
-                left.set(new Vector2(-3/DinoDuel.PPM, 0/DinoDuel.PPM), new Vector2(-3/DinoDuel.PPM, 8/DinoDuel.PPM));
+                left.set(new Vector2(-3/DinoDuel.PPM, -8/DinoDuel.PPM), new Vector2(-5/DinoDuel.PPM, 8/DinoDuel.PPM));
                 fdef.shape = left;
                 fdef.isSensor = true;
                 b2body.createFixture(fdef).setUserData("side");

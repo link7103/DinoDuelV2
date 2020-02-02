@@ -143,10 +143,11 @@ public class PlayScreen implements Screen {
         //renders the Dino1
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
-        player1.draw(game.batch);
+
 
         //might render gun
         gun.draw(game.batch);
+        player1.draw(game.batch);
         game.batch.end();
 
         //sets the batch to draw what the camera sees
