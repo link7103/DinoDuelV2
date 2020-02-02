@@ -6,7 +6,7 @@ import com.dinoduel.game.DinoDuel;
 import com.dinoduel.game.Screens.PlayScreen;
 
 public class Barrett extends Gun {
-    public Barrett(int x, int y, World world, PlayScreen screen) {
+    public Barrett(float x, float y, World world, PlayScreen screen) {
 
         super(x, y, world, screen);
         xSize = 55;

@@ -6,7 +6,7 @@ import com.dinoduel.game.DinoDuel;
 import com.dinoduel.game.Screens.PlayScreen;
 
 public class AK extends Gun {
-    public AK(int x, int y, World world, PlayScreen screen) {
+    public AK(float x, float y, World world, PlayScreen screen) {
 
         super(x, y, world, screen);
         xSize = 55;

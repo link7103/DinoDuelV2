@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.dinoduel.game.DinoDuel;
+import com.dinoduel.game.Screens.PlayScreen;
 import com.dinoduel.game.Tools.B2WorldCreator;
 
 public abstract class InteractiveTileObject {
@@ -20,7 +21,7 @@ public abstract class InteractiveTileObject {
     protected Body body;
     protected Fixture fixture;
 
-    public InteractiveTileObject(World world, TiledMap map, Rectangle bounds) {
+    public InteractiveTileObject(World world, TiledMap map, Rectangle bounds, PlayScreen screen) {
         this.world = world;
         this.map = map;
         this.bounds = bounds;

@@ -9,7 +9,7 @@ import com.dinoduel.game.DinoDuel;
 import com.dinoduel.game.Screens.PlayScreen;
 
 public class PPK extends Gun {
-    public PPK(int x, int y, World world, PlayScreen screen) {
+    public PPK(float x, float y, World world, PlayScreen screen) {
 
         super(x, y, world, screen);
         xSize = 16;

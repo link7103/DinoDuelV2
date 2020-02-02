@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.dinoduel.game.DinoDuel;
+import com.dinoduel.game.Screens.PlayScreen;
 import com.dinoduel.game.Sprites.GunBox;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class B2WorldCreator {
 
     public static final short CATEGORY_SCENERY = 0x0004;
     public static final short MASK_SCENERY = -1;
-    public B2WorldCreator(World world, TiledMap map) {
+    public B2WorldCreator(World world, TiledMap map, PlayScreen screen) {
 
         BodyDef bDef = new BodyDef();
         PolygonShape shape = new PolygonShape();
@@ -70,7 +71,7 @@ public class B2WorldCreator {
         ) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
-            new GunBox(world, map, rect);
+            new GunBox(world, map, rect, screen);
         }
 
     }

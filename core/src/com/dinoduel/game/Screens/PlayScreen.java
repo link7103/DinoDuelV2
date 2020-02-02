@@ -19,10 +19,12 @@ import com.dinoduel.game.Scenes.Hud;
 import com.dinoduel.game.Sprites.Dino;
 import com.dinoduel.game.Tools.B2WorldCreator;
 import com.dinoduel.game.Tools.WorldContactListener;
+import com.dinoduel.game.Weapons.AK;
 import com.dinoduel.game.Weapons.Barrett;
 import com.dinoduel.game.Weapons.Gun;
 import com.dinoduel.game.Weapons.Mossberg;
 import com.dinoduel.game.Weapons.PPK;
+import com.dinoduel.game.Weapons.Weapon;
 
 public class PlayScreen implements Screen {
     //Main Game
@@ -46,6 +48,10 @@ public class PlayScreen implements Screen {
     //Weapon Sprites
     public TextureAtlas weaponAtlas;
 
+    private boolean spawnWeapon;
+    private float spawnX;
+    private float spawnY;
+
     private Gun gun;
 
     public PlayScreen(DinoDuel game) {
@@ -68,7 +74,7 @@ public class PlayScreen implements Screen {
         //Creates the world
         world = new World(new Vector2(0, -10), true);
         b2dr = new Box2DDebugRenderer();
-        new B2WorldCreator(world, map);
+        new B2WorldCreator(world, map, this);
         //Player1
         player1 = new Dino(world, this);
         //Barrett test
@@ -90,12 +96,44 @@ public class PlayScreen implements Screen {
     public void show() {
     }//end show
 
+    public void spawnWeapon(float x, float y) {
+        spawnWeapon = true;
+        spawnX = x;
+        spawnY = y;
+    }
+
     //dt = delta time
     public void update(float dt) { //Updates the screen every frame
         //handle user input first
         handleInput(dt);
         //takes 1 step in the physics simulation ( 60 times per second)
         world.step(1 / 60f, 6, 2);
+
+        if (spawnWeapon) {
+            Weapon spawn;
+            int rand = (int) (Math.random() * 4);
+            Gdx.app.log("num", String.valueOf(rand));
+
+            switch (rand) {
+                case 0:
+                    //PPK
+                    spawn = new PPK(spawnX, spawnY, world, this);
+                    break;
+                case 1:
+                    //Mossberg
+                    spawn = new Mossberg(spawnX, spawnY, world, this);
+                    break;
+                case 2:
+                    //Barrett
+                    spawn = new Barrett(spawnX, spawnY, world, this);
+                    break;
+                case 3:
+                    //AK
+                    spawn = new AK(spawnX, spawnY, world, this);
+                    break;
+            }
+            spawnWeapon = false;
+        }
         //updates player sprite position
         player1.update(dt);
         gun.update();

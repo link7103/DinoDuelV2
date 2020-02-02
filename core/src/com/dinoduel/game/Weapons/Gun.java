@@ -25,14 +25,14 @@ public abstract class Gun extends Sprite implements Weapon  {
     protected Vector2 speed;
     protected int duration;
     protected int damage;
-    protected int x;
-    public int y;
+    protected float x;
+    public float y;
     protected int xSize;
     protected int ySize;
     protected boolean right;
     protected Fixture fixture;
 
-    public Gun (int x, int y, World world, PlayScreen screen) {
+    public Gun (float x, float y, World world, PlayScreen screen) {
         super(screen.getweaponAtlas().findRegion("guns"));
         this.x = x;
         this.y = y;

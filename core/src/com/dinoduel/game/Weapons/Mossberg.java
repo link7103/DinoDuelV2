@@ -8,7 +8,7 @@ import com.dinoduel.game.Screens.PlayScreen;
 
 public class Mossberg extends Gun {
 
-    public Mossberg(int x, int y, World world, PlayScreen screen) {
+    public Mossberg(float x, float y, World world, PlayScreen screen) {
 
         super(x, y, world, screen);
 
