@@ -22,7 +22,7 @@ public class Mossberg extends Gun {
         fixture.setUserData("gun");
 
 
-        setBounds(0, 0, xSize / DinoDuel.PPM, ySize / DinoDuel.PPM);
+        setBounds(x, y, xSize / DinoDuel.PPM, ySize / DinoDuel.PPM);
         setRegion(img);
         setPosition(wBody.getPosition().x/DinoDuel.PPM-getWidth()/2, wBody.getPosition().y/DinoDuel.PPM-getHeight()/2);
     }

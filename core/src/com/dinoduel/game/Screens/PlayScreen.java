@@ -26,6 +26,8 @@ import com.dinoduel.game.Weapons.Mossberg;
 import com.dinoduel.game.Weapons.PPK;
 import com.dinoduel.game.Weapons.Weapon;
 
+import java.util.ArrayList;
+
 public class PlayScreen implements Screen {
     //Main Game
     private DinoDuel game;
@@ -51,6 +53,9 @@ public class PlayScreen implements Screen {
     private boolean spawnWeapon;
     private float spawnX;
     private float spawnY;
+
+    //weapon list
+    public ArrayList<Gun> guns = new ArrayList<>();
 
     private Gun gun;
 
@@ -79,6 +84,7 @@ public class PlayScreen implements Screen {
         player1 = new Dino(world, this);
         //Barrett test
         gun = new Mossberg(40, 32, world, this);
+        guns.add(gun);
 
         //contact listener stuff
         world.setContactListener(new WorldContactListener());
@@ -110,12 +116,12 @@ public class PlayScreen implements Screen {
         world.step(1 / 60f, 6, 2);
 
         if (spawnWeapon) {
-            Weapon spawn;
+            Gun spawn;
             int rand = (int) (Math.random() * 4);
             Gdx.app.log("num", String.valueOf(rand));
 
             switch (rand) {
-                case 0:
+                default:
                     //PPK
                     spawn = new PPK(spawnX, spawnY, world, this);
                     break;
@@ -133,6 +139,7 @@ public class PlayScreen implements Screen {
                     break;
             }
             spawnWeapon = false;
+            guns.add(spawn);
         }
         //updates player sprite position
         player1.update(dt);
@@ -184,6 +191,10 @@ public class PlayScreen implements Screen {
 
 
         //might render gun
+        for (Gun drawGun: guns
+             ) {
+            drawGun.draw(game.batch);
+        }
         gun.draw(game.batch);
         player1.draw(game.batch);
         game.batch.end();

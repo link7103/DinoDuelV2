@@ -30,7 +30,7 @@ public class GunBox extends InteractiveTileObject {
     @Override
     public void onHeadHit() {
         Gdx.app.log("Gun Box", "Collision");
-        screen.spawnWeapon(body.getPosition().x, body.getPosition().y+20+bounds.getHeight());
+        screen.spawnWeapon(bounds.getX(), bounds.getY()+20+bounds.getHeight());
         //create random weapon
 
     }
