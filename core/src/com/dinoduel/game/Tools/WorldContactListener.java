@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.dinoduel.game.Sprites.InteractiveTileObject;
+import com.dinoduel.game.Weapons.Bullet;
 
 public class WorldContactListener implements ContactListener {
     @Override
@@ -16,13 +17,21 @@ public class WorldContactListener implements ContactListener {
 
 
         //Detects hitting a gun box
-        if (fixA.getUserData() == "head1" || fixB.getUserData() == "head1") {
-            Fixture head = fixA.getUserData() == "head1" ? fixA : fixB;
+        if (fixA.getUserData() == "head" || fixB.getUserData() == "head") {
+            Fixture head = fixA.getUserData() == "head" ? fixA : fixB;
             Fixture object = head == fixA ? fixB : fixA;
 
             if (object.getUserData() != null && object.getUserData() instanceof InteractiveTileObject) {
                 ((InteractiveTileObject) object.getUserData()).onHeadHit();
             }
+        }
+
+        //Bullet collision detection
+        if ((fixA.getUserData() == "side" || fixB.getUserData() == "side") && (fixA.getUserData() == "bullet" || fixB.getUserData() == "bullet")) {
+            Fixture side = fixA.getUserData() == "side" ? fixA : fixB;
+            Fixture bullet = side == fixA ? fixB : fixA;
+
+            ((Bullet) bullet.getUserData()).hit();
         }
     }
 

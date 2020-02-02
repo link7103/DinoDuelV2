@@ -203,7 +203,22 @@ public class Dino extends Sprite {
             head.set(new Vector2(-5/DinoDuel.PPM, 8/DinoDuel.PPM ), new Vector2(5/DinoDuel.PPM, 8/DinoDuel.PPM ));
             fdef.shape = head;
             fdef.isSensor = true;
-            b2body.createFixture(fdef).setUserData("head1");
+            b2body.createFixture(fdef).setUserData("head");
+
+            //side sensors
+            EdgeShape right = new EdgeShape();
+            right.set(new Vector2(3/DinoDuel.PPM, 0/DinoDuel.PPM), new Vector2(3/DinoDuel.PPM, 8/DinoDuel.PPM));
+            fdef.shape = right;
+            fdef.isSensor = true;
+            b2body.createFixture(fdef).setUserData("side");
+
+            EdgeShape left = new EdgeShape();
+            left.set(new Vector2(-3/DinoDuel.PPM, 0/DinoDuel.PPM), new Vector2(-3/DinoDuel.PPM, 8/DinoDuel.PPM));
+            fdef.shape = left;
+            fdef.isSensor = true;
+            b2body.createFixture(fdef).setUserData("side");
+
+
 
 
 
@@ -253,7 +268,20 @@ public class Dino extends Sprite {
                 head.set(new Vector2(-5/DinoDuel.PPM, 8/DinoDuel.PPM ), new Vector2(5/DinoDuel.PPM, 8/DinoDuel.PPM ));
                 fdef.shape = head;
                 fdef.isSensor = true;
-                b2body.createFixture(fdef).setUserData("head1");
+                b2body.createFixture(fdef).setUserData("head");
+
+                //side sensors
+                EdgeShape right = new EdgeShape();
+                right.set(new Vector2(3/DinoDuel.PPM, 0/DinoDuel.PPM), new Vector2(3/DinoDuel.PPM, 8/DinoDuel.PPM));
+                fdef.shape = right;
+                fdef.isSensor = true;
+                b2body.createFixture(fdef).setUserData("side");
+
+                EdgeShape left = new EdgeShape();
+                left.set(new Vector2(-3/DinoDuel.PPM, 0/DinoDuel.PPM), new Vector2(-3/DinoDuel.PPM, 8/DinoDuel.PPM));
+                fdef.shape = left;
+                fdef.isSensor = true;
+                b2body.createFixture(fdef).setUserData("side");
 
                 b2body.setLinearVelocity(currentVelocity);
 
