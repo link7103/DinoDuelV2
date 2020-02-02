@@ -7,8 +7,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
@@ -143,16 +145,18 @@ public class PlayScreen implements Screen {
         }
         //updates player sprite position
         player1.update(dt);
-        for (Gun gunU: guns
-             ) {
+        for (Gun gunU : guns
+        ) {
             gunU.update();
         }
 
 
-        //attach the gamecam to the p1s x coordinate
+        //attach the gamecam to the p1s x and y coordinate
+        // setCameraPosition();
         gameCam.position.x = player1.b2body.getPosition().x;
-        //update gamecam with correct coordinates after changes
+       // setCameraPosition();
         gameCam.update();
+
         //tell it to only render what the camera can see
         renderer.setView(gameCam);
     }//end update
@@ -176,7 +180,7 @@ public class PlayScreen implements Screen {
         //calls the pickup method
         //if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
         //    Gdx.app.log("playcreen", "keypressed");
-         //   player1.pickupGun(guns);
+        //   player1.pickupGun(guns);
         //}
     }//end handleInput
 
@@ -201,7 +205,7 @@ public class PlayScreen implements Screen {
 
 
         //might render gun
-        for (Gun drawGun: guns) {
+        for (Gun drawGun : guns) {
             drawGun.draw(game.batch);
         }
 
