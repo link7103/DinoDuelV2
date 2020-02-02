@@ -143,7 +143,11 @@ public class PlayScreen implements Screen {
         }
         //updates player sprite position
         player1.update(dt);
-        gun.update();
+        for (Gun gunU: guns
+             ) {
+            gunU.update();
+        }
+
 
         //attach the gamecam to the p1s x coordinate
         gameCam.position.x = player1.b2body.getPosition().x;
@@ -191,11 +195,10 @@ public class PlayScreen implements Screen {
 
 
         //might render gun
-        for (Gun drawGun: guns
-             ) {
+        for (Gun drawGun: guns) {
             drawGun.draw(game.batch);
         }
-        gun.draw(game.batch);
+
         player1.draw(game.batch);
         game.batch.end();
 
