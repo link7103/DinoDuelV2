@@ -164,8 +164,8 @@ public class PlayScreen implements Screen {
 
 
         //attach the gamecam to the p1s x and y coordinate
-        gameCam.position.x = player1.b2body.getPosition().x;
-        gameCam.position.y = player1.b2body.getPosition().y;
+        gameCam.position.x = (player1.b2body.getPosition().x + player2.b2body.getPosition().x) /2;
+        gameCam.position.y = (player1.b2body.getPosition().y + player1.b2body.getPosition().y)/2;
 
         setCameraPosition();
         gameCam.update();
