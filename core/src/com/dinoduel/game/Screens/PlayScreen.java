@@ -162,14 +162,7 @@ public class PlayScreen implements Screen {
             gunU.update();
         }
 
-
-        //attach the gamecam to the p1s x and y coordinate
-        gameCam.position.x = (player1.b2body.getPosition().x + player2.b2body.getPosition().x) /2;
-        gameCam.position.y = (player1.b2body.getPosition().y + player1.b2body.getPosition().y)/2;
-
         setCameraPosition();
-        gameCam.update();
-
         //tell it to only render what the camera can see
         renderer.setView(gameCam);
     }//end update
@@ -232,15 +225,12 @@ public class PlayScreen implements Screen {
         game.batch.begin();
 
 
-
         player1.draw(game.batch);
         player2.draw(game.batch);
 
         for (Gun drawGun : guns) {
             drawGun.draw(game.batch);
         }
-
-
 
         game.batch.end();
 
@@ -250,10 +240,23 @@ public class PlayScreen implements Screen {
     }//end render
 
     public void setCameraPosition() {
-        //Fix Camera Bounds
+//attach the gamecam to the the middle x and y coordinate
+        gameCam.position.x = player1.b2body.getPosition().x;
+       // gameCam.position.y = (player1.b2body.getPosition().y + player1.b2body.getPosition().y) / 2;
+
+        /*FIX
+        //sets the width to the default
+        gameCam.viewportWidth = DinoDuel.V_WIDTH / DinoDuel.PPM;
+        //if the dinos are offscreen then it extends
+        if (player1.b2body.getPosition().x - player2.b2body.getPosition().x > gameCam.viewportWidth) {
+            gameCam.viewportWidth = player1.b2body.getPosition().x - player2.b2body.getPosition().x;
+        } else if (player2.b2body.getPosition().x - player1.b2body.getPosition().x > gameCam.viewportWidth) {
+            gameCam.viewportWidth = player2.b2body.getPosition().x - player1.b2body.getPosition().x;
+        }
+*/
         // These values will need to be scaled according to the world coordinates. (for each map/level)
-        float x = (float)6.7;
-        float y = (float)2.41;
+        float x = (float) 6.7;
+        float y = (float) 2.41;
 // The left boundary of the map (x)
         int mapLeft = 0;
 // The right boundary of the map (x + width)
@@ -287,6 +290,8 @@ public class PlayScreen implements Screen {
         } else if (cameraTop >= mapTop) {
             gameCam.position.y = mapTop - cameraHalfHeight;
         }
+
+        gameCam.update();
     }//end setCameraPosition
 
     @Override
