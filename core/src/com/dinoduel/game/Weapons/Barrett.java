@@ -9,10 +9,10 @@ public class Barrett extends Gun {
     public Barrett(float x, float y, World world, PlayScreen screen) {
 
         super(x, y, world, screen);
-        xSize = 55;
-        ySize = 15;
+        xSize = 55/2;
+        ySize = 15/2;
         //fix sizing
-        img = new TextureRegion(getTexture(), 80, 155, xSize, ySize);
+        img = new TextureRegion(getTexture(), 80/2, 155/2, xSize, ySize);
 
 
         defineWeapon();

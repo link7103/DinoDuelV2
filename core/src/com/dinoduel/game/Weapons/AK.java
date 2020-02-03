@@ -9,10 +9,10 @@ public class AK extends Gun {
     public AK(float x, float y, World world, PlayScreen screen) {
 
         super(x, y, world, screen);
-        xSize = 52;
-        ySize = 13;
+        xSize = 52/2;
+        ySize = 13/2;
         //fix sizing
-        img = new TextureRegion(getTexture(), 106, 100, xSize, ySize);
+        img = new TextureRegion(getTexture(), 106/2, 100/2, xSize, ySize);
 
 
         defineWeapon();

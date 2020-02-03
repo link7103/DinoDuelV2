@@ -11,11 +11,10 @@ public class Mossberg extends Gun {
     public Mossberg(float x, float y, World world, PlayScreen screen) {
 
         super(x, y, world, screen);
+        xSize = 37/2;
+        ySize = 12/2;
 
-        xSize = 37;
-        ySize = 12;
-
-        img = new TextureRegion(getTexture(), 151, 157, xSize, ySize);
+        img = new TextureRegion(getTexture(), 151/2, 157/2, xSize, ySize);
 
 
         defineWeapon();
@@ -25,6 +24,8 @@ public class Mossberg extends Gun {
         setBounds(x, y, xSize / DinoDuel.PPM, ySize / DinoDuel.PPM);
         setRegion(img);
         setPosition(wBody.getPosition().x/DinoDuel.PPM-getWidth()/2, wBody.getPosition().y/DinoDuel.PPM-getHeight()/2);
+
+
     }
 
     @Override
