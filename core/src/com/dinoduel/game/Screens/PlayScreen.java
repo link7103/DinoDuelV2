@@ -88,8 +88,8 @@ public class PlayScreen implements Screen {
         b2dr = new Box2DDebugRenderer();
         new B2WorldCreator(world, map, this);
         //Player1
-        player1 = new Dino(world, this, "DinoSprites - doux", 0);
-        player2 = new Dino(world, this, "DinoSprites - tard", 48);
+        player1 = new Dino(world, this, "douxSprites", 0);
+        player2 = new Dino(world, this, "tardSprites", 48);
 
         //Barrett test
         gun = new Mossberg(40, 32, world, this);
