@@ -7,13 +7,14 @@ import com.dinoduel.game.Sprites.Dino;
 import com.dinoduel.game.Tools.B2WorldCreator;
 
 public interface Weapon  {
-    Dino user = null;
+
 
 
     TextureRegion getFrame();
     void useWeapon();
     void update();
     void defineWeapon();
+    void setUser(Dino dino);
 
 
 }

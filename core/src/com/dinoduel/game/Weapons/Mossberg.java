@@ -32,5 +32,9 @@ public class Mossberg extends Gun {
     public void useWeapon() {
 
     }
+
+    public String getName() {
+        return "Mossberg";
+    }
 }
 

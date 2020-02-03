@@ -47,7 +47,7 @@ public class PlayScreen implements Screen {
     private Box2DDebugRenderer b2dr;
 
     //Player
-    private Dino player1;
+    public static Dino player1;
     private Dino player2;
     //Player Sprites
     private TextureAtlas dinoAtlas;

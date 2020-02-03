@@ -30,4 +30,8 @@ public class PPK extends Gun {
     public void useWeapon() {
 
     }
+
+    public String getName() {
+        return "PPK";
+    }
 }
