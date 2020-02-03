@@ -64,7 +64,7 @@ public class PlayScreen implements Screen {
 
     public PlayScreen(DinoDuel game) {
         dinoAtlas = new TextureAtlas("Dinos/DinoSprites.txt");
-        weaponAtlas = new TextureAtlas("Weapons/weapons.txt");
+        weaponAtlas = new TextureAtlas("weapons/weapons.txt");
 
 
         this.game = game;
