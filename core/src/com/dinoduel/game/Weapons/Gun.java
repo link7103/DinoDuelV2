@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.dinoduel.game.DinoDuel;
 import com.dinoduel.game.Screens.PlayScreen;
+import com.dinoduel.game.Sprites.Dino;
 
 import java.util.ArrayList;
 
@@ -28,10 +29,11 @@ public abstract class Gun extends Sprite implements Weapon  {
     protected int damage;
     protected float x;
     public float y;
-    protected int xSize;
-    protected int ySize;
+    public int xSize;
+    public int ySize;
     protected boolean right;
     protected Fixture fixture;
+    protected Dino user;
 
     public Gun (float x, float y, World world, PlayScreen screen) {
         super(screen.getweaponAtlas().findRegion("guns"));
@@ -66,8 +68,8 @@ public abstract class Gun extends Sprite implements Weapon  {
     public void update() {
 
         //based off dino update class, unsure if it works. Should move it with a user if it has one.
-        if (user != null) {
-            wBody.setLinearVelocity(user.b2body.getLinearVelocity());
+        if (user == PlayScreen.player1) {
+            //wBody.setLinearVelocity(user.b2body.getLinearVelocity());
             setPosition(user.b2body.getPosition().x-getWidth()/2, user.b2body.getPosition().y-getHeight()/2);
             setRegion(getFrame());
         } else {
@@ -88,5 +90,13 @@ public abstract class Gun extends Sprite implements Weapon  {
         }
 
         return region;
+    }
+
+    public void setUser(Dino dino) {
+        user = dino;
+        wBody.setAwake(false);
+    }
+    public String getName() {
+        return "Mossberg";
     }
 }

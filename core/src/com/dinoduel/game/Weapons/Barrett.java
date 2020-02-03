@@ -28,4 +28,8 @@ public class Barrett extends Gun {
     public void useWeapon() {
 
     }
+
+    public String getName() {
+        return "B";
+    }
 }

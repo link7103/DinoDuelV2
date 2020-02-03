@@ -43,6 +43,7 @@ public class Dino extends Sprite {
     private boolean runningRight;
     public boolean playerDucking = true;
     private Weapon weapon;
+    private boolean hasWeapon = false;
 
     public Dino(World world, PlayScreen screen, String name, int spriteStartingYValue) {
         //Initialize Variables
@@ -320,11 +321,27 @@ public class Dino extends Sprite {
     public void pickupGun(ArrayList<Gun> guns) {
         for (Gun gun: guns
              ) {
-            //Gdx.app.log("Run", "Run");
-            if ((this.b2body.getPosition().x-getWidth()/2 <= gun.wBody.getPosition().x+gun.getWidth()/2 && this.b2body.getPosition().x-getWidth()/2 >= gun.wBody.getPosition().x-gun.getWidth()/2) || (this.b2body.getPosition().x+getWidth()/2 <= gun.wBody.getPosition().x+gun.getWidth()/2 && this.b2body.getPosition().x+getWidth()/2 >= gun.wBody.getPosition().x-gun.getWidth()/2)) {
-                Gdx.app.log("Dino", "x");
-                if ((this.b2body.getPosition().y < gun.wBody.getPosition().y+gun.getHeight()/2 && this.b2body.getPosition().y > gun.wBody.getPosition().y-gun.getHeight()/2) || (this.b2body.getPosition().y <= gun.wBody.getPosition().y+gun.getHeight()/2 && this.b2body.getPosition().y >= gun.wBody.getPosition().y-gun.getHeight()/2)) {
-                    Gdx.app.log("Dino", "y");
+
+            if (!hasWeapon) {
+                Gdx.app.log("Run", "Run");
+                Gdx.app.log("Dino x",  "" + (this.b2body.getPosition().x));
+                Gdx.app.log("Dino y",  "" + (this.b2body.getPosition().y));
+                Gdx.app.log("Dino width",  "" + (getWidth()));
+                Gdx.app.log("Dino height",  "" + (getWidth()));
+                Gdx.app.log("gun x",  "" + (gun.wBody.getPosition().x));
+                Gdx.app.log("gun y",  "" + (gun.wBody.getPosition().y));
+                Gdx.app.log("gun width",  "" + (gun.getWidth()));
+                Gdx.app.log("gun height",  "" + (gun.getWidth()));
+                if ((this.b2body.getPosition().x - 3/DinoDuel.PPM <= gun.wBody.getPosition().x + gun.xSize / 2 && this.b2body.getPosition().x - 3/DinoDuel.PPM >= gun.wBody.getPosition().x - gun.xSize / 2) || (this.b2body.getPosition().x + 3/DinoDuel.PPM <= gun.wBody.getPosition().x + gun.xSize / 2 && this.b2body.getPosition().x + 3/DinoDuel.PPM >= gun.wBody.getPosition().x - gun.xSize / 2)) {
+
+
+                    if ((this.b2body.getPosition().y - 3/DinoDuel.PPM <= gun.wBody.getPosition().y - gun.ySize / 2 && this.b2body.getPosition().y - 3/DinoDuel.PPM  >= gun.wBody.getPosition().y - gun.ySize / 2) || (this.b2body.getPosition().y + 3/DinoDuel.PPM <= gun.wBody.getPosition().y + gun.ySize / 2 && this.b2body.getPosition().y + 3/DinoDuel.PPM >= gun.wBody.getPosition().y - gun.ySize / 2)) {
+                        Gdx.app.log("Dino", gun.getName());
+                        hasWeapon = true;
+                        gun.setUser(this);
+
+                        break;
+                    }
                 }
             }
         }

@@ -28,5 +28,9 @@ public class AK extends Gun {
     public void useWeapon() {
 
     }
+
+    public String getName() {
+        return "A";
+    }
 }
 

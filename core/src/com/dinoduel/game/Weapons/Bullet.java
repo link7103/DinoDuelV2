@@ -61,6 +61,7 @@ public class Bullet extends Sprite {
         //fdef.filter.maskBits = MASK_WEAPON;
         bBody.createFixture(fdef);
         bBody.setLinearVelocity(speed);
+        bBody.setBullet(true);
 
         // TODO: 2020-02-01 make sure that it is oriented on the correct side of the bullet
         //leading edge of bullet
