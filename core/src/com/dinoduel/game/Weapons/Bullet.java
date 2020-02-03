@@ -68,7 +68,7 @@ public class Bullet extends Sprite {
         side.set(new Vector2(2/DinoDuel.PPM, (float)-1.5/DinoDuel.PPM), new Vector2(2/DinoDuel.PPM, (float)1.5/DinoDuel.PPM));
         fdef.shape = side;
         fdef.isSensor = true;
-        bBody.createFixture(fdef).setUserData("side");
+        bBody.createFixture(fdef);
     }
 
 

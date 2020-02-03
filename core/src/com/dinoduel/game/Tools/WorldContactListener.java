@@ -6,7 +6,9 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.dinoduel.game.Screens.PlayScreen;
 import com.dinoduel.game.Sprites.Dino;
+import com.dinoduel.game.Sprites.GunBox;
 import com.dinoduel.game.Sprites.InteractiveTileObject;
 import com.dinoduel.game.Weapons.Bullet;
 import com.dinoduel.game.Weapons.Gun;
@@ -20,30 +22,29 @@ public class WorldContactListener implements ContactListener {
 
 
         //Detects hitting a gun box
-        if (fixA.getUserData() == "head" || fixB.getUserData() == "head") {
+        //sides are buggy
+        if ((fixA.getUserData() == "head" || fixB.getUserData() == "head") ) {
             Fixture head = fixA.getUserData() == "head" ? fixA : fixB;
             Fixture object = head == fixA ? fixB : fixA;
-
-            if (object.getUserData() != null && object.getUserData() instanceof InteractiveTileObject) {
+            //Gdx.app.log("head", "collision");
+            if (object.getUserData() instanceof InteractiveTileObject) {
+                //Gdx.app.log("Gun Box", "Collision");
+                PlayScreen.screen.spawnWeapon(((InteractiveTileObject) object.getUserData()));
                 ((InteractiveTileObject) object.getUserData()).onHeadHit();
             }
         }
 
         //Bullet collision detection
-        if ((fixA.getUserData() == "side" || fixB.getUserData() == "side") && (fixA.getUserData() == "bullet" || fixB.getUserData() == "bullet")) {
+        if ((fixA.getUserData() == "side" || fixB.getUserData() == "side") ) {
             Fixture side = fixA.getUserData() == "side" ? fixA : fixB;
-            Fixture bullet = side == fixA ? fixB : fixA;
+            Fixture object = side == fixA ? fixB : fixA;
 
-            ((Bullet) bullet.getUserData()).hit();
+            if(object.getUserData() != null && object.getUserData() instanceof Bullet ) {
+
+            }
         }
 
-        //pickuo detection
-        if ((fixA.getUserData() == "gun" || fixB.getUserData() == "gun") && (fixA.getUserData() == "body" || fixB.getUserData() == "body")) {
-            Fixture body = fixA.getUserData() == "gun" ? fixA : fixB;
-            Fixture gun = body == fixA ? fixB : fixA;
 
-            //((Dino) body.getUserData()).pickupGun(((Gun)gun));
-        }
     }
 
     @Override

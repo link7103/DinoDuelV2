@@ -14,15 +14,13 @@ public class DinoDuel extends Game {
     public static final float PPM = 100;
 
     public static final short CATEGORY_WEAPON = 2;
-    public static final short MASK_WEAPON = 4 | 8;
-
     public static final short CATEGORY_SCENERY = 4;
-    public static final short MASK_SCENERY = -1;
-
     public static final short CATEGORY_DINO = 1;
-    public static final short MASK_DINO = CATEGORY_DINO |CATEGORY_SCENERY | 8;
-
     public static final short CATEGORY_GUNBOX = 8;
+
+    public static final short MASK_WEAPON = CATEGORY_SCENERY | CATEGORY_GUNBOX;
+    public static final short MASK_SCENERY = -1;
+    public static final short MASK_DINO = CATEGORY_DINO |CATEGORY_SCENERY | CATEGORY_GUNBOX;
     public static final short MASK_GUNBOX = CATEGORY_SCENERY | CATEGORY_DINO | CATEGORY_WEAPON;
 
     public SpriteBatch batch;
