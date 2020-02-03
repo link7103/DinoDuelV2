@@ -312,18 +312,16 @@ public class Dino extends Sprite {
                 Gdx.app.log("Run", "Run");
                 Gdx.app.log("Dino x",  "" + (this.b2body.getPosition().x));
                 Gdx.app.log("Dino y",  "" + (this.b2body.getPosition().y));
-                Gdx.app.log("Dino width",  "" + (5/DinoDuel.PPM));
-                Gdx.app.log("Dino height",  "" + (8/DinoDuel.PPM));
+                Gdx.app.log("Dino width",  "" + (getWidth()));
+                Gdx.app.log("Dino height",  "" + (getWidth()));
                 Gdx.app.log("gun x",  "" + (gun.wBody.getPosition().x));
                 Gdx.app.log("gun y",  "" + (gun.wBody.getPosition().y));
-                Gdx.app.log("gun width",  "" + (gun.xSize/2/DinoDuel.PPM));
-                Gdx.app.log("gun height",  "" + (gun.ySize/2/DinoDuel.PPM));
-                if ((this.b2body.getPosition().x - 5/DinoDuel.PPM <= gun.wBody.getPosition().x + gun.xSize / 2/DinoDuel.PPM && this.b2body.getPosition().x - 5/DinoDuel.PPM >= gun.wBody.getPosition().x - gun.xSize / 2/DinoDuel.PPM) ||
-                        (this.b2body.getPosition().x + 5/DinoDuel.PPM <= gun.wBody.getPosition().x + gun.xSize / 2/DinoDuel.PPM && this.b2body.getPosition().x + 5/DinoDuel.PPM >= gun.wBody.getPosition().x - gun.xSize / 2/DinoDuel.PPM) ||
-                        (this.b2body.getPosition().x  <= gun.wBody.getPosition().x + gun.xSize / 2/DinoDuel.PPM && this.b2body.getPosition().x  >= gun.wBody.getPosition().x - gun.xSize / 2/DinoDuel.PPM)) {
+                Gdx.app.log("gun width",  "" + (gun.getWidth()));
+                Gdx.app.log("gun height",  "" + (gun.getWidth()));
+                if ((this.b2body.getPosition().x - 3/DinoDuel.PPM <= gun.wBody.getPosition().x + gun.xSize / 2 && this.b2body.getPosition().x - 3/DinoDuel.PPM >= gun.wBody.getPosition().x - gun.xSize / 2) || (this.b2body.getPosition().x + 3/DinoDuel.PPM <= gun.wBody.getPosition().x + gun.xSize / 2 && this.b2body.getPosition().x + 3/DinoDuel.PPM >= gun.wBody.getPosition().x - gun.xSize / 2)) {
 
 
-                    if ((this.b2body.getPosition().y - 8/DinoDuel.PPM <= gun.wBody.getPosition().y + gun.ySize / 2/DinoDuel.PPM && this.b2body.getPosition().y - 8/DinoDuel.PPM  >= gun.wBody.getPosition().y - gun.ySize / 2/DinoDuel.PPM) || (this.b2body.getPosition().y + 8/DinoDuel.PPM <= gun.wBody.getPosition().y + gun.ySize / 2/DinoDuel.PPM && this.b2body.getPosition().y + 8/DinoDuel.PPM >= gun.wBody.getPosition().y - gun.ySize / 2/DinoDuel.PPM)) {
+                    if ((this.b2body.getPosition().y - 3/DinoDuel.PPM <= gun.wBody.getPosition().y - gun.ySize / 2 && this.b2body.getPosition().y - 3/DinoDuel.PPM  >= gun.wBody.getPosition().y - gun.ySize / 2) || (this.b2body.getPosition().y + 3/DinoDuel.PPM <= gun.wBody.getPosition().y + gun.ySize / 2 && this.b2body.getPosition().y + 3/DinoDuel.PPM >= gun.wBody.getPosition().y - gun.ySize / 2)) {
                         Gdx.app.log("Dino", gun.getName());
                         hasWeapon = true;
                         gun.setUser(this);
