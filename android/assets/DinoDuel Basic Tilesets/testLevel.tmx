@@ -11,7 +11,7 @@
  </tileset>
  <layer name="background" width="42" height="16">
   <data encoding="base64" compression="zlib">
-   eJzrZGBg6BzFo3gUj+JRPIpH8Sge4ThxELhhpGAAF61niA==
+   eJzrZGBg6BzFo3gUj+JRPIpHMQZOGgRuGHUn/XDiEHHncMAApQ9m7A==
   </data>
  </layer>
  <layer name="bushes" width="42" height="16">

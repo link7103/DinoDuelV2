@@ -4,7 +4,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Disposable;
@@ -21,18 +24,29 @@ public class Hud implements Disposable {
     private float timeCount;
     private Integer score;
 
+//Player1
+    Label player1Label;
+    Label player1NameLabel;
+//Player2
+    Label player2Label;
+    Label player2NameLabel;
+    //Player 3
+    Label player3Label;
+    Label player3NameLabel;
+    //Player 4
+    Label player4Label;
+    Label player4NameLabel;
 
-    Label dino1Label;
-    Label dino1scoreLabel;
     Label timeLabel;
     Label stageLabel;
     Label stageNameLabel;
     Label countDownLabel;
 
     public Hud(SpriteBatch sb) {
+
         worldTimer = 300;
         timeCount = 0;
-        score = 0;
+        score = 3;
         viewport = new FitViewport(DinoDuel.V_WIDTH, DinoDuel.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, sb);
 
@@ -44,15 +58,17 @@ public class Hud implements Disposable {
         timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         stageLabel = new Label("STAGE", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         stageNameLabel = new Label("StageName", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        dino1Label = new Label("Dino1", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        dino1scoreLabel = new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        //player1
+
+        player1Label = new Label("Dino1", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        player1NameLabel = new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 //Add more for 2 player dino Label
 
-        table.add(dino1Label).expandX().padTop(10);
+        table.add(player1Label).expandX().padTop(10);
         table.add(timeLabel).expandX().padTop(10);
         table.add(stageLabel).expandX().padTop(10);
         table.row();
-        table.add(dino1scoreLabel).expandX();
+        table.add(player1NameLabel).expandX();
         table.add(countDownLabel).expandX();
         table.add(stageNameLabel).expandX().padTop(10);
 
