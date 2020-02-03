@@ -103,5 +103,8 @@ public abstract class Gun extends Sprite implements Weapon  {
     public String test(){
         return "Matt";
     }
+    public String test2(){
+        return "Matt";
+    }
 }
 
