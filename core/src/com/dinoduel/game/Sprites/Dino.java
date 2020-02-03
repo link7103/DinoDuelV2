@@ -338,6 +338,7 @@ public class Dino extends Sprite {
                     if ((this.b2body.getPosition().y - 3/DinoDuel.PPM <= gun.wBody.getPosition().y - gun.ySize / 2 && this.b2body.getPosition().y - 3/DinoDuel.PPM  >= gun.wBody.getPosition().y - gun.ySize / 2) || (this.b2body.getPosition().y + 3/DinoDuel.PPM <= gun.wBody.getPosition().y + gun.ySize / 2 && this.b2body.getPosition().y + 3/DinoDuel.PPM >= gun.wBody.getPosition().y - gun.ySize / 2)) {
                         Gdx.app.log("Dino", gun.getName());
                         hasWeapon = true;
+                        gun.setUser(this);
 
                         break;
                     }

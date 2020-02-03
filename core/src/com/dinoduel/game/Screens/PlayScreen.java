@@ -232,13 +232,15 @@ public class PlayScreen implements Screen {
         game.batch.begin();
 
 
-        //might render gun
+
+        player1.draw(game.batch);
+        player2.draw(game.batch);
+
         for (Gun drawGun : guns) {
             drawGun.draw(game.batch);
         }
 
-        player1.draw(game.batch);
-        player2.draw(game.batch);
+
 
         game.batch.end();
 

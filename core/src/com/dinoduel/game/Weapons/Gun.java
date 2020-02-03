@@ -69,7 +69,7 @@ public abstract class Gun extends Sprite implements Weapon  {
 
         //based off dino update class, unsure if it works. Should move it with a user if it has one.
         if (user == PlayScreen.player1) {
-            wBody.setLinearVelocity(user.b2body.getLinearVelocity());
+            //wBody.setLinearVelocity(user.b2body.getLinearVelocity());
             setPosition(user.b2body.getPosition().x-getWidth()/2, user.b2body.getPosition().y-getHeight()/2);
             setRegion(getFrame());
         } else {
@@ -94,6 +94,7 @@ public abstract class Gun extends Sprite implements Weapon  {
 
     public void setUser(Dino dino) {
         user = dino;
+        wBody.setAwake(false);
     }
     public String getName() {
         return "Mossberg";
