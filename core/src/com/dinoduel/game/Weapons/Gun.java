@@ -99,6 +99,9 @@ public abstract class Gun extends Sprite implements Weapon  {
     public String getName() {
         return "Mossberg";
     }
+
+    public String test(){
+        return "Matt";
+    }
 }
 
-//hey man
