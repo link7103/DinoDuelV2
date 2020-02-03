@@ -30,25 +30,6 @@ public class B2WorldCreator {
 
         //the first get(x); x = layer number in tiled counting from bottom up starting at 0
         //Ground layer
-        for (MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)
-        ) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-            bDef.type = BodyDef.BodyType.StaticBody;
-            bDef.position.set((rect.getX() + rect.getWidth() / 2) / DinoDuel.PPM, (rect.getY() + rect.getHeight() / 2) / DinoDuel.PPM);
-
-            body = world.createBody(bDef);
-
-            shape.setAsBox(rect.getWidth() / 2 / DinoDuel.PPM, rect.getHeight() / 2 / DinoDuel.PPM);
-            fDef.shape = shape;
-            fDef.filter.categoryBits = DinoDuel.CATEGORY_SCENERY;
-            fDef.filter.maskBits = DinoDuel.MASK_SCENERY;
-            fixture = body.createFixture(fDef);
-            fixture.setUserData("ground");
-
-        }
-
-        //Guns 5
         for (MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)
         ) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
@@ -64,9 +45,28 @@ public class B2WorldCreator {
             fDef.filter.maskBits = DinoDuel.MASK_SCENERY;
             fixture = body.createFixture(fDef);
             fixture.setUserData("ground");
+
         }
-        //GunBox 6
+
+        //Guns 6
         for (MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)
+        ) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            bDef.type = BodyDef.BodyType.StaticBody;
+            bDef.position.set((rect.getX() + rect.getWidth() / 2) / DinoDuel.PPM, (rect.getY() + rect.getHeight() / 2) / DinoDuel.PPM);
+
+            body = world.createBody(bDef);
+
+            shape.setAsBox(rect.getWidth() / 2 / DinoDuel.PPM, rect.getHeight() / 2 / DinoDuel.PPM);
+            fDef.shape = shape;
+            fDef.filter.categoryBits = DinoDuel.CATEGORY_SCENERY;
+            fDef.filter.maskBits = DinoDuel.MASK_SCENERY;
+            fixture = body.createFixture(fDef);
+            fixture.setUserData("ground");
+        }
+        //normal GunBox 7
+        for (MapObject object : map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)
         ) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 

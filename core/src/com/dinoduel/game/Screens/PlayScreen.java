@@ -250,7 +250,7 @@ public class PlayScreen implements Screen {
     public void setCameraPosition() {
         //Fix Camera Bounds
         // These values will need to be scaled according to the world coordinates. (for each map/level)
-        int x = 4;
+        float x = (float)6.7;
         float y = (float)2.41;
 // The left boundary of the map (x)
         int mapLeft = 0;
