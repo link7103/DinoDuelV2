@@ -95,16 +95,12 @@ public abstract class Gun extends Sprite implements Weapon  {
     public void setUser(Dino dino) {
         user = dino;
         wBody.setAwake(false);
+        wBody.destroyFixture(fixture);
     }
     public String getName() {
         return "Mossberg";
     }
 
-    public String test(){
-        return "Matt";
-    }
-    public String test2(){
-        return "Dino";
-    }
+
 }
 
