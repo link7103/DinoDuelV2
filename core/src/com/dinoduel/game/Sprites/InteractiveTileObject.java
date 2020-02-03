@@ -29,12 +29,5 @@ public abstract class InteractiveTileObject {
 
     }
 
-    public abstract int onHeadHit();
-    public float getSpawnX() {
-        return bounds.getX() + bounds.getWidth()/2;
-    }
-    public float getSpawnY() {
-        return bounds.getY() + bounds.getHeight();
-
-    }
+    public abstract void onHeadHit();
 }

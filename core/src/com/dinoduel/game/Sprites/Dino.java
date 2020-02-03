@@ -193,24 +193,17 @@ public class Dino extends Sprite {
 
             FixtureDef fdef = new FixtureDef();
             PolygonShape shape = new PolygonShape();
-            //shape.setAsBox(3 / DinoDuel.PPM, 8 /
-            //sets as a polygon
-            Vector2[] coordinates = new Vector2[4];
-            coordinates[0] = new Vector2(-3/DinoDuel.PPM, -8/DinoDuel.PPM);
-            coordinates[1] = new Vector2(3/DinoDuel.PPM, -8/DinoDuel.PPM);
-            coordinates[2] = new Vector2(-5/DinoDuel.PPM, 8/DinoDuel.PPM);
-            coordinates[3] = new Vector2(5/DinoDuel.PPM, 8/DinoDuel.PPM);
-            shape.set(coordinates);
+            shape.setAsBox(3 / DinoDuel.PPM, 8 / DinoDuel.PPM);
 
             fdef.shape = shape;
             fdef.filter.categoryBits = DinoDuel.CATEGORY_DINO;
             fdef.filter.maskBits = DinoDuel.MASK_DINO;
             b2body.createFixture(fdef);
-
+            b2body.createFixture(fdef).setUserData("body");
 
             //head sensor
             EdgeShape head = new EdgeShape();
-            head.set(new Vector2(-3/DinoDuel.PPM, 8/DinoDuel.PPM ), new Vector2(3/DinoDuel.PPM, 8/DinoDuel.PPM ));
+            head.set(new Vector2(-5/DinoDuel.PPM, 8/DinoDuel.PPM ), new Vector2(5/DinoDuel.PPM, 8/DinoDuel.PPM ));
             fdef.shape = head;
             fdef.isSensor = true;
             b2body.createFixture(fdef).setUserData("head");
@@ -273,14 +266,7 @@ public class Dino extends Sprite {
 
                 FixtureDef fdef = new FixtureDef();
                 PolygonShape shape = new PolygonShape();
-                //shape.setAsBox(3 / DinoDuel.PPM, 8 / DinoDuel.PPM);
-                //sets as polygon
-                Vector2[] coordinates = new Vector2[4];
-                coordinates[0] = new Vector2(-3/DinoDuel.PPM, -8/DinoDuel.PPM);
-                coordinates[1] = new Vector2(3/DinoDuel.PPM, -8/DinoDuel.PPM);
-                coordinates[2] = new Vector2(-5/DinoDuel.PPM, 8/DinoDuel.PPM);
-                coordinates[3] = new Vector2(5/DinoDuel.PPM, 8/DinoDuel.PPM);
-                shape.set(coordinates);
+                shape.setAsBox(3 / DinoDuel.PPM, 8 / DinoDuel.PPM);
 
                 fdef.shape = shape;
                 fdef.filter.categoryBits = DinoDuel.CATEGORY_DINO;
@@ -290,7 +276,7 @@ public class Dino extends Sprite {
 
                 //head sensor
                 EdgeShape head = new EdgeShape();
-                head.set(new Vector2(-3/DinoDuel.PPM, 8/DinoDuel.PPM ), new Vector2(3/DinoDuel.PPM, 8/DinoDuel.PPM ));
+                head.set(new Vector2(-5/DinoDuel.PPM, 8/DinoDuel.PPM ), new Vector2(5/DinoDuel.PPM, 8/DinoDuel.PPM ));
                 fdef.shape = head;
                 fdef.isSensor = true;
                 b2body.createFixture(fdef).setUserData("head");

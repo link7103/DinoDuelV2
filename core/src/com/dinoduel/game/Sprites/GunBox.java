@@ -3,9 +3,7 @@ package com.dinoduel.game.Sprites;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -34,16 +32,12 @@ public class GunBox extends InteractiveTileObject {
     }
 
     @Override
-    public int onHeadHit() {
+    public void onHeadHit() {
         //Gdx.app.log("Gun Box", "Collision");
-        //generates random number to be passed in play screen to choose gun
-        //needs to be adjusted for more weapons
-        return (int) (Math.random()*4);
+        screen.spawnWeapon(bounds.getX(), bounds.getY()+20+bounds.getHeight());
         //create random weapon
 
     }
-
-
 
     public void defineGunBox() {
         BodyDef bDef = new BodyDef();
@@ -60,7 +54,6 @@ public class GunBox extends InteractiveTileObject {
         fDef.filter.categoryBits = DinoDuel.CATEGORY_GUNBOX;
         fDef.filter.maskBits = DinoDuel.MASK_GUNBOX;
         fixture = body.createFixture(fDef);
-
     }
 
 }

@@ -19,7 +19,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dinoduel.game.DinoDuel;
 import com.dinoduel.game.Scenes.Hud;
 import com.dinoduel.game.Sprites.Dino;
-import com.dinoduel.game.Sprites.InteractiveTileObject;
 import com.dinoduel.game.Tools.B2WorldCreator;
 import com.dinoduel.game.Tools.WorldContactListener;
 import com.dinoduel.game.Weapons.AK;
@@ -57,8 +56,6 @@ public class PlayScreen implements Screen {
     private boolean spawnWeapon;
     private float spawnX;
     private float spawnY;
-    int spawnType = -1;
-    public static PlayScreen screen;
 
     //weapon list
     public ArrayList<Gun> guns = new ArrayList<>();
@@ -66,7 +63,6 @@ public class PlayScreen implements Screen {
     private Gun gun;
 
     public PlayScreen(DinoDuel game) {
-        screen = this;
         dinoAtlas = new TextureAtlas("Dinos/DinoSprites.txt");
         weaponAtlas = new TextureAtlas("Weapons/weapons.txt");
 
@@ -111,11 +107,10 @@ public class PlayScreen implements Screen {
     public void show() {
     }//end show
 
-    public void spawnWeapon(InteractiveTileObject object) {
+    public void spawnWeapon(float x, float y) {
         spawnWeapon = true;
-        spawnType = object.onHeadHit();
-        spawnX = object.getSpawnX();
-        spawnY = object.getSpawnY();
+        spawnX = x;
+        spawnY = y;
     }
 
     //dt = delta time
@@ -125,13 +120,12 @@ public class PlayScreen implements Screen {
         //takes 1 step in the physics simulation ( 60 times per second)
         world.step(1 / 60f, 6, 2);
 
-        //spawns weapons if told to
         if (spawnWeapon) {
             Gun spawn;
-            //int rand = (int) (Math.random() * 4);
-            //Gdx.app.log("num", String.valueOf(rand));
+            int rand = (int) (Math.random() * 4);
+            Gdx.app.log("num", String.valueOf(rand));
 
-            switch (spawnType) {
+            switch (rand) {
                 default:
                     //PPK
                     spawn = new PPK(spawnX, spawnY, world, this);
@@ -150,7 +144,6 @@ public class PlayScreen implements Screen {
                     break;
             }
             spawnWeapon = false;
-            spawnType = -1;
             guns.add(spawn);
         }
         //updates player sprite position
